@@ -18,10 +18,9 @@ Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 #define MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS PB_9
 
 #define MOTOR_PWM_FREQUENCY_HZ 100
-#define ON_DUTY_CYCLE_PERCENT 30
-#define OFF_DUTY_CYCLE 0
+#define ON_DUTY_CYCLE 30
 #define TURN_DUTY_CYCLE 20
-#define Kp 0.05
+#define Kp 0.1
 
 // Digital Read Readings
 volatile uint16_t left_reading;
@@ -29,8 +28,7 @@ volatile uint16_t right_reading;
 
 volatile u_int8_t prev_state = 0;
 
-// Variable to show program is running
-uint16_t counter = 0;
+void drive(int speedL, int speedR);
 
 void setup() {
   // Setup Input tape track pins
@@ -75,42 +73,21 @@ void loop() {
   // Right is on tape left is not, need to turn right
   if(right_reading > RIGHT_TAPE_THRESHOLD && left_reading < LEFT_TAPE_THRESHOLD)
   {
-    pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, TURN_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+    drive(TURN_DUTY_CYCLE, TURN_DUTY_CYCLE - (Kp * (right_reading - RIGHT_TAPE_THRESHOLD)));
     prev_state = 1;
   }
 
   // Left is on tape right is not, need to turn left
   else if(left_reading > LEFT_TAPE_THRESHOLD && right_reading < RIGHT_TAPE_THRESHOLD)
   {
-    pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, TURN_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+    drive(TURN_DUTY_CYCLE - (Kp * (left_reading - LEFT_TAPE_THRESHOLD)), TURN_DUTY_CYCLE);
     prev_state = 2;
   }
 
   // Both are on the tape, turn both motors on
   else if(right_reading >= RIGHT_TAPE_THRESHOLD && left_reading >= LEFT_TAPE_THRESHOLD)
   {
-    pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, ON_DUTY_CYCLE_PERCENT,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-    pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, ON_DUTY_CYCLE_PERCENT,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+    drive(ON_DUTY_CYCLE, ON_DUTY_CYCLE);
     prev_state = 0;
   }
 
@@ -118,38 +95,51 @@ void loop() {
   else if(right_reading >= RIGHT_TAPE_THRESHOLD && left_reading >= LEFT_TAPE_THRESHOLD)
   {
     if(prev_state == 0) {
-      pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, ON_DUTY_CYCLE_PERCENT,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, ON_DUTY_CYCLE_PERCENT,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+      drive(ON_DUTY_CYCLE, ON_DUTY_CYCLE);
     }
     if(prev_state == 1) {
       //Turn right
-      pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, TURN_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+      drive(TURN_DUTY_CYCLE, 0);
     }
     if(prev_state == 2) {
       //Turn left
-      pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-              pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, OFF_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
-      pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, TURN_DUTY_CYCLE,
-              TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+      drive(0, TURN_DUTY_CYCLE);
     }
   }
-
 }
+<<<<<<< HEAD
 >>>>>>> 7f767f4 (Update main.cpp)
+=======
+
+void drive(int speedL, int speedR) {
+        if(speedL > 100) speedL = 100;
+        if(speedL < -100) speedL = -100;
+        if(speedR > 100) speedR = 100;
+        if(speedR < -100) speedR = -100;
+
+        if (speedL >= 0) {
+                pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, 0,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+                pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, speedL,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+        }
+        else {
+                pwm_start(MOTOR_PWM_OUTPUT_LEFT, MOTOR_PWM_FREQUENCY_HZ, 0,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+                pwm_start(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, -speedL,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+        }
+        if (speedR >= 0) {
+                pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, 0,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+                pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, speedR,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+        }
+        else {
+                pwm_start(MOTOR_PWM_OUTPUT_RIGHT, MOTOR_PWM_FREQUENCY_HZ, 0,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+                pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, -speedR,
+                        TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
+        }
+  }
+>>>>>>> 8e64072 (Update Tapetracking with untested proportional control)

@@ -12,18 +12,22 @@ Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 #define TAPE_INPUT_PIN_LEFT PA4 // Tape Tracking Pins
 #define TAPE_INPUT_PIN_RIGHT PA5
 
-#define LEFT_TAPE_THRESHOLD 710
-#define RIGHT_TAPE_THRESHOLD 720
+#define LEFT_TAPE_THRESHOLD 700
+#define RIGHT_TAPE_THRESHOLD 710
 
 #define MOTOR_PWM_OUTPUT_LEFT PA_8 // Motor Drive PWM Pins
 #define MOTOR_PWM_OUTPUT_LEFT_BACKWARDS PA_9
 #define MOTOR_PWM_OUTPUT_RIGHT PB_8
 #define MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS PB_9
 
+#define Relay2 PB12
+#define Relay3 PB13
+#define Relay1 PB14
+
 #define MOTOR_PWM_FREQUENCY_HZ 100
-#define ON_DUTY_CYCLE 50
-#define TURN_DUTY_CYCLE 50
-#define Kp 0.4
+#define ON_DUTY_CYCLE 30
+#define TURN_DUTY_CYCLE 20
+#define Kp 0.1
 
 // Digital Read Readings
 volatile uint16_t left_reading;
@@ -35,7 +39,35 @@ void drive(int speedL, int speedR);
 >>>>>>> 2cc11e0 (Working tuned TP code)
 
 void setup() {
+<<<<<<< HEAD
   // put your setup code here, to run once:
+=======
+  pinMode(Relay1, OUTPUT);
+  pinMode(Relay2, OUTPUT);
+  pinMode(Relay3, OUTPUT);
+
+  // Setup Input tape track pins
+  pinMode(TAPE_INPUT_PIN_LEFT, INPUT);
+  pinMode(TAPE_INPUT_PIN_RIGHT, INPUT);
+
+  // Setup output pwm motor pins
+  pinMode(MOTOR_PWM_OUTPUT_LEFT, OUTPUT);
+  pinMode(MOTOR_PWM_OUTPUT_RIGHT, OUTPUT);
+  pinMode(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, OUTPUT);
+  pinMode(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, OUTPUT);
+
+  // Initializes Display
+  display_handler.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display_handler.display();
+  delay(2000);
+
+  display_handler.clearDisplay();
+  display_handler.setTextSize(1);
+  display_handler.setTextColor(SSD1306_WHITE);
+  display_handler.setCursor(0,0);
+  display_handler.println("Hello world!");
+  display_handler.display();
+>>>>>>> 0d061f0 (Implemented relay to drive function)
 }
 
 void loop() {
@@ -76,19 +108,19 @@ void loop() {
     prev_state = 0;
   }
 
-  // Neither are on the tape
-  else if(right_reading <= RIGHT_TAPE_THRESHOLD && left_reading <= LEFT_TAPE_THRESHOLD)
+  // Neither are on the tape, turn off
+  else if(right_reading >= RIGHT_TAPE_THRESHOLD && left_reading >= LEFT_TAPE_THRESHOLD)
   {
     if(prev_state == 0) {
       drive(ON_DUTY_CYCLE, ON_DUTY_CYCLE);
     }
     if(prev_state == 1) {
       //Turn right
-      drive(TURN_DUTY_CYCLE + 10, 0);
+      drive(TURN_DUTY_CYCLE, 0);
     }
     if(prev_state == 2) {
       //Turn left
-      drive(0, TURN_DUTY_CYCLE + 10);
+      drive(0, TURN_DUTY_CYCLE);
     }
   }
 }
@@ -97,6 +129,10 @@ void loop() {
 =======
 
 void drive(int speedL, int speedR) {
+        digitalWrite(Relay1, 0);
+        digitalWrite(Relay2, 0);
+        digitalWrite(Relay3, 0);
+
         if(speedL > 100) speedL = 100;
         if(speedL < -100) speedL = -100;
         if(speedR > 100) speedR = 100;

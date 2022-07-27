@@ -3,8 +3,9 @@
 // Functions related to IR tracking     //
 //                                      //
 //////////////////////////////////////////
+#include "./../include/infrared.h"   
 #include <Arduino.h>
-#include <infrared.h>
+
 
 #define IR_INPUT_PIN_LEFT PB0 // IR Pins
 #define IR_INPUT_PIN_RIGHT PA7 
@@ -34,7 +35,7 @@ float last_error = 0;
  * @return The difference between the right reading and the left reading of the frequency.
  *         Return a positive integer if right is larger, negative if left is stronger.
  */
-float getDifferenceInIRReading(short frequency_khz){
+float getDifferenceInIRReadings(short frequency_khz){
     float start_time = micros();
     for(int reading_counter = 0; reading_counter < NUMBER_OF_IR_READINGS; reading_counter++)
     {

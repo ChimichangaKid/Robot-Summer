@@ -4,6 +4,9 @@
 //                                              //
 //////////////////////////////////////////////////
 
+#ifndef INFRARED_H
+#define INFRARED_H
+
 #ifndef NUMBER_OF_IR_READINGS
 #define NUMBER_OF_IR_READINGS 150
 #endif
@@ -23,7 +26,7 @@
  * @return The difference between the right reading and the left reading of the frequency.
  *         Return a positive integer if right is larger, negative if left is stronger.
  */
-float getDifferenceInIRREadings(short frequency_khz);
+float getDifferenceInIRReadings(short);
 
 
 /**
@@ -31,4 +34,6 @@ float getDifferenceInIRREadings(short frequency_khz);
  * 
  * @param error The difference in the left and the right reading.
  */
-float infraredPIDControl(float error);
+float infraredPIDControl(float);
+
+#endif

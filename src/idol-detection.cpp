@@ -53,6 +53,7 @@ void sonarMeasure(){
   else {
     sonarEndMeasureMicroS = micros();
     distance = (sonarEndMeasureMicroS-sonarStartMeasureMicroS) * 0.034 / 2;
+    
     if (distance<IDOL_SEARCH_RADIUS_CM){
       consecutiveDetectTally++;
     }

@@ -12,10 +12,10 @@ Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 #define TAPE_INPUT_PIN_LEFT PA4 // Tape Tracking Pins
 #define TAPE_INPUT_PIN_RIGHT PA5
 
-#define LEFT_TAPE_THRESHOLD 700
-#define RIGHT_TAPE_THRESHOLD 710
+#define LEFT_TAPE_THRESHOLD 710
+#define RIGHT_TAPE_THRESHOLD 720
 
-#define MOTOR_PWM_OUTPUT_LEFT PA_8 // Motor Drive PWM Pins
+#define MOTOR_PWM_OUTPUT_LEFT PA_8
 #define MOTOR_PWM_OUTPUT_LEFT_BACKWARDS PA_9
 #define MOTOR_PWM_OUTPUT_RIGHT PB_8
 #define MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS PB_9
@@ -25,9 +25,9 @@ Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 #define Relay1 PB14
 
 #define MOTOR_PWM_FREQUENCY_HZ 100
-#define ON_DUTY_CYCLE 30
-#define TURN_DUTY_CYCLE 20
-#define Kp 0.1
+#define ON_DUTY_CYCLE 50
+#define TURN_DUTY_CYCLE 50
+#define Kp 0.4
 
 // Digital Read Readings
 volatile uint16_t left_reading;
@@ -108,19 +108,19 @@ void loop() {
     prev_state = 0;
   }
 
-  // Neither are on the tape, turn off
-  else if(right_reading >= RIGHT_TAPE_THRESHOLD && left_reading >= LEFT_TAPE_THRESHOLD)
+  // Neither are on the tape
+  else if(right_reading <= RIGHT_TAPE_THRESHOLD && left_reading <= LEFT_TAPE_THRESHOLD)
   {
     if(prev_state == 0) {
       drive(ON_DUTY_CYCLE, ON_DUTY_CYCLE);
     }
     if(prev_state == 1) {
       //Turn right
-      drive(TURN_DUTY_CYCLE, 0);
+      drive(TURN_DUTY_CYCLE + 10, 0);
     }
     if(prev_state == 2) {
       //Turn left
-      drive(0, TURN_DUTY_CYCLE);
+      drive(0, TURN_DUTY_CYCLE + 10);
     }
   }
 }

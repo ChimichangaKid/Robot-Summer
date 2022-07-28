@@ -50,4 +50,4 @@ void drive(int speedL, int speedR) {
                 pwm_start(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, MOTOR_PWM_FREQUENCY_HZ, -speedR,
                         TimerCompareFormat_t::PERCENT_COMPARE_FORMAT);
         }
-  }
+}

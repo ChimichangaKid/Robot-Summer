@@ -1,8 +1,6 @@
 #include "./../include/wall.h" 
 #include "pins.h"
 
-
-
 void driveWall(int direction);
 
 void setUpWall(){

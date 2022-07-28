@@ -5,13 +5,13 @@
 
 void setup() {
   // put your setup code here, to run once:
-  setUpWall();
+  // setUpWall();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  launchWall();
-  // launchPickUp(RIGHT);
+  // launchWall();
+  launchPickUp(RIGHT);
   // driveWall(WALL_BACKWARD);
   delay(2000);
 }

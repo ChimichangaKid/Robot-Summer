@@ -14,6 +14,10 @@
 #define HOLD_OPPOSITE_ARM false
 #endif
 
+#ifndef FURTHER_PUSH
+#define FURTHER_PUSH true
+#endif
+
 #ifndef ARM_SWING_DUTY_CYCLE
 #define ARM_SWING_DUTY_CYCLE 50 // ~12V (quick as possible)
 #endif

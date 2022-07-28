@@ -11,3 +11,6 @@
 #define RELAY_CH2 PB13
 #define RELAY_CH3 PB14 // Right Arm
 // BOTH 13 & 14 for wall
+
+#define BOMB_DETECT_SERVO PB4
+#define BOMB_DETECT_SENSOR PA15

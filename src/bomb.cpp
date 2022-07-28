@@ -22,4 +22,5 @@ bool launchBombDetect(){
         }
     }
     return bombDetected;
+    bombServo.detach();
 }

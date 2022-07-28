@@ -1,60 +1,11 @@
-#include <Wire.h>
-#include <Adafruit_SSD1306.h>
-
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_RESET -1
-Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-#define TAPE_INPUT_PIN_LEFT PA4 // Tape Tracking Pins
-#define TAPE_INPUT_PIN_RIGHT PA5
-
-#define LEFT_TAPE_THRESHOLD 700
-#define RIGHT_TAPE_THRESHOLD 710
-
-#define MOTOR_PWM_OUTPUT_LEFT PA_8 // Motor Drive PWM Pins
-#define MOTOR_PWM_OUTPUT_LEFT_BACKWARDS PA_9
-#define MOTOR_PWM_OUTPUT_RIGHT PB_8
-#define MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS PB_9
-
-#define MOTOR_PWM_FREQUENCY_HZ 100
-#define ON_DUTY_CYCLE 30
-#define TURN_DUTY_CYCLE 20
-#define Kp 0.1
-
-// Digital Read Readings
-volatile uint16_t left_reading;
-volatile uint16_t right_reading;
-
-volatile u_int8_t prev_state = 0;
-
-void drive(int speedL, int speedR);
+#include <Arduino.h>
 
 void setup() {
-  // Setup Input tape track pins
-  pinMode(TAPE_INPUT_PIN_LEFT, INPUT);
-  pinMode(TAPE_INPUT_PIN_RIGHT, INPUT);
-
-  // Setup output pwm motor pins
-  pinMode(MOTOR_PWM_OUTPUT_LEFT, OUTPUT);
-  pinMode(MOTOR_PWM_OUTPUT_RIGHT, OUTPUT);
-  pinMode(MOTOR_PWM_OUTPUT_LEFT_BACKWARDS, OUTPUT);
-  pinMode(MOTOR_PWM_OUTPUT_RIGHT_BACKWARDS, OUTPUT);
-
-  // Initializes Display
-  display_handler.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display_handler.display();
-  delay(2000);
-
-  display_handler.clearDisplay();
-  display_handler.setTextSize(1);
-  display_handler.setTextColor(SSD1306_WHITE);
-  display_handler.setCursor(0,0);
-  display_handler.println("Hello world!");
-  display_handler.display();
+  // put your setup code here, to run once:
 }
 
 void loop() {
+<<<<<<< HEAD
 <<<<<<< HEAD
   // put your main code here, to run repeatedly:
 } 
@@ -143,3 +94,7 @@ void drive(int speedL, int speedR) {
         }
   }
 >>>>>>> 8e64072 (Update Tapetracking with untested proportional control)
+=======
+  // put your main code here, to run repeatedly:
+}
+>>>>>>> b496ada (Organized Code)

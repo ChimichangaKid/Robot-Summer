@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #define MOTOR_PWM_OUTPUT_LEFT PA_8
 #define MOTOR_PWM_OUTPUT_LEFT_BACKWARDS PA_9
 #define MOTOR_PWM_OUTPUT_RIGHT PB_8
@@ -10,4 +12,4 @@
 #define Relay1 PB14
 
 void drive(int speedL, int speedR);
-
+void drive_setup();

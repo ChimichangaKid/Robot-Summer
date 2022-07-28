@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #define TAPE_INPUT_PIN_LEFT PA4
 #define TAPE_INPUT_PIN_RIGHT PA5
 
@@ -9,3 +11,4 @@
 #define Kp 0.4
 
 void TapeTrack();
+void setup_TapeTrack();

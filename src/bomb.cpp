@@ -16,8 +16,8 @@ bool launchBombDetect(){
             servoAngle += SERVO_ANGLE_INCREASE;
             delay(SWEEP_STEP_DELAY);
         }
+        bombServo.write(0);
         if (bombDetected) {
-            bombServo.write(0);
             break;
         }
     }

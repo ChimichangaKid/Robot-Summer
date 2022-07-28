@@ -10,11 +10,6 @@
 Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 void setup() {
-  pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
-  pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
-
-  //Attach external IRQ pin to IRQ handler
-  attachInterrupt(digitalPinToInterrupt(echoPin), sonarMeasure, CHANGE);
 
   // Displays Adafruit logo by default. call clearDisplay immediately if you don't want this.
   display_handler.begin(SSD1306_SWITCHCAPVCC, 0x3C);

@@ -4,11 +4,9 @@
 //                                      //
 //////////////////////////////////////////
 #include "./../include/infrared.h"   
+#include "./../include/pins.h"
 #include <Arduino.h>
 
-
-#define IR_INPUT_PIN_LEFT PB0 // IR Pins
-#define IR_INPUT_PIN_RIGHT PA7 
 #define IR_DRIVE_SPEED 30
 
 #define DESIRED_IR_ERROR 0

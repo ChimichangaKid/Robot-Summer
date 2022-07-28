@@ -11,3 +11,7 @@
 #define RELAY_CH2 PB13
 #define RELAY_CH3 PB14 // Right Arm
 // BOTH 13 & 14 for wall
+
+/* IR PINS */
+#define IR_INPUT_PIN_LEFT PB0 
+#define IR_INPUT_PIN_RIGHT PA7 

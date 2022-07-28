@@ -1,5 +1,5 @@
-#include "./../include/wall.h" 
-#include "pins.h"
+#include "./../include/wall.h"
+#include "./../include/pins.h"
 
 void driveWall(int direction);
 

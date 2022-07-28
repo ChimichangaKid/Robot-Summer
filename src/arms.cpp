@@ -1,5 +1,6 @@
 #include "./../include/arms.h"
-#include "pins.h"
+#include "./../include/pins.h"
+#include "./../include/bomb.h"
 // #include <Arduino.h>
 
 void relayArms(bool mode){
@@ -101,29 +102,20 @@ void wackArm(int side, int times){
 }
 
 void launchPickUp(int side){
-    /* run magnetic sensor */
-    /* TODO: Insert magnetic sensor function */
-
-    // relayArms(true);
-    bool isBomb = false;
-    if (!isBomb){
+    if (!launchBombDetect()){
         moveArm(side, OPEN, true);
+
         /* drives robot a bit forward*/
         /* TODO: Insert drive function. !!! MUST TURN OFF ARM RELAY */
 
         PinName OPPOSITE_PIN;
-        if (HOLD_OPPOSITE_ARM){
-            OPPOSITE_PIN = holdArm(1-side);
-        }
+        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
         moveArm(side, CLOSE, true);
         
         // push statues further inside
         delay(1000);
-        wackArm(side,1);
-        if (HOLD_OPPOSITE_ARM)
-        {
-            pwm_stop(OPPOSITE_PIN);
-        }
+        if (FURTHER_PUSH) wackArm(side,1);
+        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
     }
 }
 

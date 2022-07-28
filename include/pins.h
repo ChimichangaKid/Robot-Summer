@@ -12,6 +12,10 @@
 #define RELAY_CH3 PB14 // Right Arm
 // BOTH 13 & 14 for wall
 
+/* BOMB DETECTION PINS */
+#define BOMB_DETECT_SERVO PB4
+#define BOMB_DETECT_SENSOR PA15
+
 /* IR PINS */
 #define IR_INPUT_PIN_LEFT PB0 
 #define IR_INPUT_PIN_RIGHT PA7 

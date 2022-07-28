@@ -1,6 +1,7 @@
 #include <Arduino.h>
-#include "drive.h"
-#include "Tape_Track.h"
+#include "./../include/drive.h"
+#include "./../include/Tape_Track.h"
+#include "./../include/pins.h"
 
 //Variable that stores reading of reflectance value
 volatile uint16_t left_reading;

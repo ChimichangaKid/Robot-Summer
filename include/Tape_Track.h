@@ -1,8 +1,5 @@
 #include <Arduino.h>
 
-#define TAPE_INPUT_PIN_LEFT PA4
-#define TAPE_INPUT_PIN_RIGHT PA5
-
 #define LEFT_TAPE_THRESHOLD 710
 #define RIGHT_TAPE_THRESHOLD 720
 

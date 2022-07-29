@@ -19,6 +19,14 @@
 #define IR_K_DERIVATIVE 0
 #endif
 
+#ifndef ONE_KHZ
+#define ONE_KHZ 1
+#endif
+
+#ifndef TEN_KHZ
+#define TEN_KHZ 10
+#endif
+
 /**
  * Gets the difference between the left and right readings of the IR sensor
  * 
@@ -35,5 +43,20 @@ float getDifferenceInIRReadings(short);
  * @param error The difference in the left and the right reading.
  */
 float infraredPIDControl(float);
+
+/**
+ * Determines the drive direction and speed of the IR following
+ * 
+ * @param error The difference in the left and the right reading.
+ * @param PID The PID calculation to adjust the speed of the driving.
+ */
+void infraredDrive(float error, float PID);
+
+/**
+ * Rotates the robot until it sees the desired frequency beacon.
+ * 
+ * @param frequency_khz The frequency that the robot is searching for
+ */
+void locateBeacon(short frequency_kHz);
 
 #endif

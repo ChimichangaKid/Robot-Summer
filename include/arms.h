@@ -15,11 +15,11 @@
 #endif
 
 #ifndef FURTHER_PUSH
-#define FURTHER_PUSH true
+#define FURTHER_PUSH false
 #endif
 
 #ifndef ARM_SWING_DUTY_CYCLE
-#define ARM_SWING_DUTY_CYCLE 50 // ~12V (quick as possible)
+#define ARM_SWING_DUTY_CYCLE 70 // ~12V (quick as possible)
 #endif
 
 #ifndef ARM_HOLD_DUTY_CYCLE
@@ -27,13 +27,13 @@
 #endif
 
 #ifndef OPEN_TIME
-#define OPEN_TIME 200
+#define OPEN_TIME 100
 #endif
 
 #ifndef CLOSE_TIME
-#define CLOSE_TIME 300
+#define CLOSE_TIME 100
 #endif
 
 void setUpArm();
-void launchPickUp(int side);
+void launchPickUp(int side, short);
 PinName moveArm(int side, int direction, bool timedStop);

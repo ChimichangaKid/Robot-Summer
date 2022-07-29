@@ -15,7 +15,7 @@ volatile unsigned long sonarEndMeasureMicroS = 0;
 volatile int consecutiveDetectTally = 0;
 
 bool searchForIdol(){
-  if(consecutiveDetectTally>CONSECUTIVE_DETECT_THRESHOLD){
+  if(consecutiveDetectTally>=CONSECUTIVE_DETECT_THRESHOLD){
     consecutiveDetectTally = 0;
     return true;
   }

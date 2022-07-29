@@ -1,6 +1,7 @@
 #include "./../include/arms.h"
 #include "./../include/pins.h"
 #include "./../include/bomb.h"
+#include "./../include/drive.h"
 // #include <Arduino.h>
 
 void relayArms(bool mode){
@@ -12,19 +13,6 @@ void relayArms(bool mode){
         digitalWrite(RELAY_CH1, LOW);
         digitalWrite(RELAY_CH2, LOW);
     }
-}
-
-void setUpArm()
-{
-    /* TODO: relay H-brigdes to arms */
-    pinMode(RELAY_CH1, OUTPUT);
-    pinMode(RELAY_CH2, OUTPUT);
-    pinMode(RELAY_CH3, OUTPUT);
-    pinMode(RIGHT_DRIVE_A, OUTPUT);
-    pinMode(RIGHT_DRIVE_B, OUTPUT);
-    pinMode(LEFT_DRIVE_A, OUTPUT);
-    pinMode(LEFT_DRIVE_B, OUTPUT);
-    relayArms(true);
 }
 
 void pwm_run(PinName Pin, int dutyCycle)
@@ -101,20 +89,25 @@ void wackArm(int side, int times){
     }
 }
 
-void launchPickUp(int side){
-    if (!launchBombDetect()){
+void launchPickUp(int side, short speed){
+    if (true /*!launchBombDetect()*/){
+        relayArms(true);
         moveArm(side, OPEN, true);
 
-        /* drives robot a bit forward*/
-        /* TODO: Insert drive function. !!! MUST TURN OFF ARM RELAY */
+        drive(speed, speed);
+        delay(500);
+        drive(0,0);
 
+        relayArms(true);
         PinName OPPOSITE_PIN;
         if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
         moveArm(side, CLOSE, true);
         
         // push statues further inside
-        delay(1000);
-        if (FURTHER_PUSH) wackArm(side,1);
+        if (FURTHER_PUSH){
+            delay(1000);
+            wackArm(side,1);
+        } 
         if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
     }
 }

@@ -6,8 +6,8 @@ extern volatile unsigned long sonarStartMeasureMicroS;
 extern volatile unsigned long sonarEndMeasureMicroS;
 extern volatile int consecutiveDetectTally;
 
-#define CONSECUTIVE_DETECT_THRESHOLD 5
-#define IDOL_SEARCH_RADIUS_CM 15
+#define CONSECUTIVE_DETECT_THRESHOLD 1
+#define IDOL_SEARCH_RADIUS_CM 10
 
 bool searchForIdol();
 void triggerSonar();

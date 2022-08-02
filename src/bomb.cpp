@@ -4,15 +4,16 @@
 #include "./../include/bomb.h"
 
 bool launchBombDetect(){
-    pinMode(BOMB_DETECT_SENSOR, INPUT_PULLUP);
+    // ONLY WORKS WITH RIGHT SERVO
+    pinMode(BOMB_DETECT_SENSOR_RIGHT, INPUT_PULLUP);
     Servo bombServo;
-    bombServo.attach(BOMB_DETECT_SERVO);
+    bombServo.attach(BOMB_DETECT_SERVO_RIGHT);
     bool bombDetected = false;
     for (int sweep_count = 0; sweep_count < SWEEP_COUNTS; sweep_count++){
         int servoAngle = 0;
         while(servoAngle <= 180 && !bombDetected){
             bombServo.write(servoAngle);
-            bombDetected = 1 - digitalRead(BOMB_DETECT_SENSOR);
+            bombDetected = 1 - digitalRead(BOMB_DETECT_SENSOR_RIGHT);
             servoAngle += SERVO_ANGLE_INCREASE;
             delay(SWEEP_STEP_DELAY);
         }

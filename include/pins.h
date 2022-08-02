@@ -7,14 +7,17 @@
 #define LEFT_DRIVE_B PA_9
 
 /* Relay Pins */
-#define RELAY_CH1 PB12 // Left Arm
-#define RELAY_CH2 PB13
-#define RELAY_CH3 PB14 // Right Arm
-// BOTH 13 & 14 for wall
+#define RELAY_CH1 PB13 // Left Arm
+#define RELAY_CH2 PB14 // Right Arm
+#define RELAY_CH3 PB12
+// BOTH 12 & 14 for wall
 
 /* BOMB DETECTION PINS */
-#define BOMB_DETECT_SERVO PB4
-#define BOMB_DETECT_SENSOR PA15
+#define BOMB_DETECT_SERVO_LEFT PB10
+#define BOMB_DETECT_SERVO_RIGHT PB11
+
+#define BOMB_DETECT_SENSOR_LEFT PA2 
+#define BOMB_DETECT_SENSOR_RIGHT PA3
 
 /* IR PINS */
 #define IR_INPUT_PIN_LEFT PB0 

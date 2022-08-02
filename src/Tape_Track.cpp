@@ -60,3 +60,10 @@ void TapeTrack() {
     }
   }
 }
+
+void find_Tape() {
+  while(right_reading = analogRead(TAPE_INPUT_PIN_RIGHT) < RIGHT_TAPE_THRESHOLD) {
+    drive(-40, 0);
+  }
+  drive(0, 0);
+}

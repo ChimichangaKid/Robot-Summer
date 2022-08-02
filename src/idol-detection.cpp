@@ -32,6 +32,7 @@ void sonarSetup(){
   pinMode(ECHO_PIN, INPUT); // Sets the echoPin as an INPUT
 
   //Attach external IRQ pin to IRQ handler
+  delay(1000);
   attachInterrupt(digitalPinToInterrupt(ECHO_PIN), sonarMeasure, CHANGE);
 }
 
@@ -53,7 +54,7 @@ void sonarMeasure(){
   else {
     sonarEndMeasureMicroS = micros();
     distance = (sonarEndMeasureMicroS-sonarStartMeasureMicroS) * 0.034 / 2;
-    
+
     if (distance<IDOL_SEARCH_RADIUS_CM){
       consecutiveDetectTally++;
     }

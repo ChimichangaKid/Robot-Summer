@@ -8,6 +8,7 @@
 #include "./../include/arms.h"
 #include "../include/infrared.h"
 #include "../include/wall.h"
+#include "../include/bomb.h"
 
 
 #include <Arduino.h>
@@ -63,15 +64,17 @@ void loop() {
       
       switch(statues_seen){
         case 0:
-          launchPickUpStatueOne(RIGHT, DEFAULT_SPEED);
-          find_Tape();
+          if(launchBombDetect()) {
+            //launchPickUpStatueOne(RIGHT, DEFAULT_SPEED);
+            //find_Tape();
+          }
           break;
-        case 1:
-          launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
-          find_Tape();
+        //case 1:
+        //  launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
+        //  find_Tape();
       }
       
-      statues_seen += 1;
+      //statues_seen += 1;
       
     }
   //}

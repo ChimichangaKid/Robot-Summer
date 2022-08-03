@@ -38,4 +38,5 @@ void relayArms(bool);
 void setUpArm();
 void launchPickUpStatueOne(int side, short);
 void launchPickUpStatueTwo(int side, short);
+void launchPickUpStatueThree(int, short);
 PinName moveArm(int side, int direction, bool timedStop);

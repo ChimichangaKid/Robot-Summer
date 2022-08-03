@@ -14,10 +14,9 @@
 #include <Arduino.h>
 
 
-#define STATE_TAPE_TRACK 0
-#define STATE_IR_1KHZ 3
-#define STATE_IR_10KHZ 4
-#define STATE_PICKUP -1
+#define STATE_TAPE_TRACK 1
+#define STATE_IR_1KHZ 2
+#define STATE_IR_10KHZ 3
 
 #define DEFAULT_SPEED 25
 
@@ -28,50 +27,53 @@ void setup() {
     sonarSetup();
 }
 
-short statues_seen = 0;
+short statues_seen = 2;
 float error;
 float ir_pid;
 bool is_turned = false;
+short current_state = STATE_TAPE_TRACK;
 
 void loop() {
   
 
-  //if(statues_seen == STATE_TAPE_TRACK){
+  if(current_state == STATE_TAPE_TRACK){
     TapeTrack();
-  //}
+  }
   
-  /*
-  if(statues_seen == STATE_IR_1KHZ){
+  
+  if(current_state == STATE_IR_1KHZ){
     error = getDifferenceInIRReadings(ONE_KHZ);
     ir_pid = infraredPIDControl(error);
     infraredDrive(error, ir_pid);
   }
 
-  if(statues_seen == STATE_IR_10KHZ){
-    if(!is_turned){
-      locateBeacon(TEN_KHZ);
-      is_turned = true;
-    }
-    
+  if(current_state == STATE_IR_10KHZ){    
     error = getDifferenceInIRReadings(TEN_KHZ);
     ir_pid = infraredPIDControl(error);
     infraredDrive(error, ir_pid);
   }
-  */
+  
 
-  //if(!(statues_seen == STATE_PICKUP)){
-    if(searchForIdol()){
-      
-      switch(statues_seen){
-        case 0:
-          if(launchBombDetect()) {
-            //launchPickUpStatueOne(RIGHT, DEFAULT_SPEED);
-            //find_Tape();
-          }
+  if(searchForIdol()){
+    switch(statues_seen){
+      case 0: // FIRST STATUE PICKUP
+          launchPickUpStatueOne(RIGHT, DEFAULT_SPEED);
+          find_Tape();
           break;
-        //case 1:
-        //  launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
-        //  find_Tape();
+      case 1: // SECOND STATUE PICKUP
+          launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
+          find_Tape();
+          break;
+      case 2: // DETECTS THE ARCHWAY (CANNOT AVOID)
+          current_state = STATE_IR_1KHZ;
+          break;
+      case 3: // THIRD STATUE PICKUP
+          launchPickUpStatueThree(LEFT, DEFAULT_SPEED);
+          locateBeacon(TEN_KHZ);
+          current_state = STATE_IR_10KHZ;
+          break;
+      case 4: // FOURTH STATUE PICKUP
+          break;
       }
       
       //statues_seen += 1;

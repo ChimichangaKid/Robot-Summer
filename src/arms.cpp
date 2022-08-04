@@ -94,14 +94,14 @@ void launchPickUpStatueOne(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
-    if (!launchBombDetect()){   
+    if (!launchBombDetectRight()){   
         delay(1000);
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
         drive(speed + 55, speed);
-        delay(850);
+        delay(750);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -123,14 +123,45 @@ void launchPickUpStatueTwo(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
-    drive(-50, 0);
-    delay(700);
     drive(0, -50);
-    delay(1100);
-    drive(40,50);
-    delay(700);
+    delay(400);
+    drive(30, 50);
+    delay(400);
     drive(0,0);
-    if (!launchBombDetect()){   
+    if (!launchBombDetectRight()){   
+        delay(1000);
+        relayArms(true);
+        delay(1000);
+        moveArm(side, OPEN, true);
+        delay(1000);
+        drive(20,50);
+        delay(300);
+        drive(0,0);
+        delay(1000);
+        relayArms(true);
+        delay(1000);
+        PinName OPPOSITE_PIN;
+        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
+        moveArm(side, CLOSE, true);
+        delay(1000);
+        // push statues further inside
+        if (FURTHER_PUSH){
+            delay(1000);
+            wackArm(side,1);
+        } 
+        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+    }
+}
+
+void launchPickUpStatueThree(int side, short speed){
+    drive(-25,-25);
+    delay(200);
+    drive(0,0);
+    if (!launchBombDetectLeft()){   
+        delay(1000);
+        drive(-speed, -speed);
+        delay(500);
+        drive(0,0);
         delay(1000);
         relayArms(true);
         delay(1000);
@@ -155,8 +186,40 @@ void launchPickUpStatueTwo(int side, short speed){
     }
 }
 
-void launchPickUpStatueThree(int side, short speed){
-    if (!launchBombDetect()){   
+void launchPickUpStatueFour(int side, short speed){
+    drive(-25,-25);
+    delay(200);
+    drive(0,0);
+    if (!launchBombDetectRight()){   
+        delay(1000);
+        relayArms(true);
+        delay(1000);
+        moveArm(side, OPEN, true);
+        delay(1000);
+        drive(speed, speed);
+        delay(600);
+        drive(0,0);
+        delay(1000);
+        relayArms(true);
+        delay(1000);
+        PinName OPPOSITE_PIN;
+        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
+        moveArm(side, CLOSE, true);
+        delay(1000);
+        // push statues further inside
+        if (FURTHER_PUSH){
+            delay(1000);
+            wackArm(side,1);
+        } 
+        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+    }
+}
+
+void launchPickUpStatueFive(int side, short speed){
+    drive(-25,-25);
+    delay(200);
+    drive(0,0);
+    if (!launchBombDetectLeft()){   
         delay(1000);
         relayArms(true);
         delay(1000);

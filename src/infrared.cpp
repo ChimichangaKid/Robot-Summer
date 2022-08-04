@@ -8,7 +8,7 @@
 #include "./../include/drive.h"
 #include <Arduino.h>
 
-#define IR_DRIVE_SPEED 30
+#define IR_DRIVE_SPEED 40
 
 #define DESIRED_IR_ERROR 0
 #define DESIRED_IR_READING 20000
@@ -122,10 +122,10 @@ void infraredDrive(float error, float PID){
         drive(IR_DRIVE_SPEED, IR_DRIVE_SPEED);
     }
     else if(error > 5000){
-        drive(IR_DRIVE_SPEED - PID, IR_DRIVE_SPEED + PID);
+        drive(IR_DRIVE_SPEED + PID, IR_DRIVE_SPEED - PID);
     }
     else{
-        drive(IR_DRIVE_SPEED + PID, IR_DRIVE_SPEED - PID);
+        drive(IR_DRIVE_SPEED - PID, IR_DRIVE_SPEED + PID);
     }
 }
 
@@ -136,6 +136,6 @@ void infraredDrive(float error, float PID){
  */
 void locateBeacon(short frequency_kHz){
     do{
-        drive(0, -25);
+        drive(0, -30);
     } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
 }

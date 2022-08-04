@@ -27,7 +27,7 @@ void setup() {
     sonarSetup();
 }
 
-short statues_seen = 2;
+short statues_seen = 0;
 float error;
 float ir_pid;
 bool is_turned = false;
@@ -35,11 +35,9 @@ short current_state = STATE_TAPE_TRACK;
 
 void loop() {
   
-
   if(current_state == STATE_TAPE_TRACK){
     TapeTrack();
   }
-  
   
   if(current_state == STATE_IR_1KHZ){
     error = getDifferenceInIRReadings(ONE_KHZ);
@@ -54,32 +52,46 @@ void loop() {
   }
   
 
-  if(searchForIdol()){
+  if(searchForIdolRight()){
     switch(statues_seen){
       case 0: // FIRST STATUE PICKUP
           launchPickUpStatueOne(RIGHT, DEFAULT_SPEED);
+          drive(-70, -10);
+          delay(1000);
           find_Tape();
+          statues_seen += 1;
           break;
       case 1: // SECOND STATUE PICKUP
           launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
           find_Tape();
+          statues_seen += 1;
           break;
       case 2: // DETECTS THE ARCHWAY (CANNOT AVOID)
+          delay(2000);
           current_state = STATE_IR_1KHZ;
+          statues_seen += 1;
           break;
+      
+      case 4: // FOURTH STATUE PICKUP
+          launchPickUpStatueFour(RIGHT, DEFAULT_SPEED);
+          statues_seen += 1;
+          break;
+      }
+    }
+
+  if(searchForIdolLeft()){
+    switch(statues_seen){
       case 3: // THIRD STATUE PICKUP
           launchPickUpStatueThree(LEFT, DEFAULT_SPEED);
           locateBeacon(TEN_KHZ);
           current_state = STATE_IR_10KHZ;
+          statues_seen += 1;
           break;
-      case 4: // FOURTH STATUE PICKUP
+      case 5: // FIFTH STATUE PICKUP
+          launchPickUpStatueFive(LEFT, DEFAULT_SPEED);
+          statues_seen += 1;
           break;
-      }
-      
-      //statues_seen += 1;
-      
     }
-  //}
-  
-  
+    
+  }
 }

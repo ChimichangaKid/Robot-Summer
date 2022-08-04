@@ -14,12 +14,21 @@
 #define SWEEP_STEP_DELAY 100
 #endif
 
-#ifndef UPPER_LIMIT_SWEEP
-#define UPPER_LIMIT_SWEEP 167
+#ifndef UPPER_LIMIT_SWEEP_LEFT
+#define UPPER_LIMIT_SWEEP_LEFT 167
 #endif
 
-#ifndef LOWER_LIMIT_SWEEP
-#define LOWER_LIMIT_SWEEP 40
+#ifndef UPPER_LIMIT_SWEEP_RIGHT
+#define UPPER_LIMIT_SWEEP_RIGHT 1
 #endif
 
-bool launchBombDetect();
+#ifndef LOWER_LIMIT_SWEEP_LEFT
+#define LOWER_LIMIT_SWEEP_LEFT 40
+#endif
+
+#ifndef LOWER_LIMIT_SWEEP_RIGHT
+#define LOWER_LIMIT_SWEEP_RIGHT 140
+#endif
+
+bool launchBombDetectRight();
+bool launchBombDetectLeft();

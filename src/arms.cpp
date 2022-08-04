@@ -101,7 +101,7 @@ void launchPickUpStatueOne(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(speed + 55, speed);
-        delay(750);
+        delay(900);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -116,6 +116,8 @@ void launchPickUpStatueOne(int side, short speed){
             wackArm(side,1);
         } 
         if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+        moveArm(side, CLOSE, true);
+        delay(1000);
     }
 }
 
@@ -123,10 +125,36 @@ void launchPickUpStatueTwo(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
+    drive(-50, 0);
+    delay(700);
     drive(0, -50);
-    delay(400);
-    drive(30, 50);
-    delay(400);
+    delay(1100);
+    drive(50,50);
+    delay(600);
+    drive(0,0);
+    if (true /*!launchBombDetect()*/){   
+        delay(1000);
+        relayArms(true);
+        delay(1000);
+        moveArm(side, OPEN, true);
+        delay(1000);
+        drive(40,40);
+        delay(200);
+        drive(0, 60);
+        delay(500);
+        drive(0,0);
+        delay(1000);
+        relayArms(true);
+        delay(1000);
+    /*drive(-25,-25);
+    delay(200);
+    drive(0,0);
+    drive(-50, -50);
+    delay(1000);
+    drive(60, 30);
+    delay(500);
+    drive(20, 60);
+    delay(500);
     drive(0,0);
     if (!launchBombDetectRight()){   
         delay(1000);
@@ -134,12 +162,12 @@ void launchPickUpStatueTwo(int side, short speed){
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(20,50);
-        delay(300);
+        drive(30,50);
+        delay(250);
         drive(0,0);
         delay(1000);
         relayArms(true);
-        delay(1000);
+        delay(1000);*/
         PinName OPPOSITE_PIN;
         if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
         moveArm(side, CLOSE, true);
@@ -157,18 +185,23 @@ void launchPickUpStatueThree(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
+    drive(50,40);
+    delay(500);
+    drive(65,40);
+    delay(1750);
+    drive(-50,-57);
+    delay(1500);
+    drive(-55, -50);
+    delay(800);
+    drive(0,0);
     if (!launchBombDetectLeft()){   
-        delay(1000);
-        drive(-speed, -speed);
-        delay(500);
-        drive(0,0);
         delay(1000);
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(speed, speed);
-        delay(600);
+        drive(speed-10, speed);
+        delay(1000);
         drive(0,0);
         delay(1000);
         relayArms(true);

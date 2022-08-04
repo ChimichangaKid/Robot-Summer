@@ -136,6 +136,6 @@ void infraredDrive(float error, float PID){
  */
 void locateBeacon(short frequency_kHz){
     do{
-        drive(0, -30);
+        drive(0, 30);
     } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
 }

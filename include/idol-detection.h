@@ -15,8 +15,8 @@ extern volatile unsigned long sonarStartMeasureMicroSRight;
 extern volatile unsigned long sonarEndMeasureMicroSRight;
 extern volatile int consecutiveDetectTallyRight;
 
-#define CONSECUTIVE_DETECT_THRESHOLD 1
-#define IDOL_SEARCH_RADIUS_CM 20
+#define CONSECUTIVE_DETECT_THRESHOLD 2
+#define IDOL_SEARCH_RADIUS_CM 30
 
 bool searchForIdolRight();
 bool searchForIdolLeft();

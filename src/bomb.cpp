@@ -36,7 +36,7 @@ bool launchBombDetectLeft(){
         int servoAngle = UPPER_LIMIT_SWEEP_LEFT;
         while(servoAngle > LOWER_LIMIT_SWEEP_LEFT && !bombDetected){
             bombServo.write(servoAngle);
-            bombDetected = 1 - digitalRead(BOMB_DETECT_SENSOR_RIGHT);
+            bombDetected = 1 - digitalRead(BOMB_DETECT_SENSOR_LEFT);
             servoAngle += SERVO_ANGLE_INCREASE;
             delay(SWEEP_STEP_DELAY);
         }

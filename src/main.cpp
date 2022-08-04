@@ -66,11 +66,6 @@ void loop() {
           find_Tape();
           statues_seen += 1;
           break;
-      case 2: // DETECTS THE ARCHWAY (CANNOT AVOID)
-          delay(2000);
-          current_state = STATE_IR_1KHZ;
-          statues_seen += 1;
-          break;
       
       case 4: // FOURTH STATUE PICKUP
           launchPickUpStatueFour(RIGHT, DEFAULT_SPEED);
@@ -81,6 +76,15 @@ void loop() {
 
   if(searchForIdolLeft()){
     switch(statues_seen){
+      case 2: // DETECTS THE ARCHWAY (CANNOT AVOID)
+          drive(40,50);
+          delay(400);
+          drive(0,0);
+          locateBeacon(ONE_KHZ);
+          current_state = STATE_IR_1KHZ;
+          statues_seen += 1;
+          break;
+
       case 3: // THIRD STATUE PICKUP
           launchPickUpStatueThree(LEFT, DEFAULT_SPEED);
           locateBeacon(TEN_KHZ);

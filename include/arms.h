@@ -15,7 +15,7 @@
 #endif
 
 #ifndef FURTHER_PUSH
-#define FURTHER_PUSH false
+#define FURTHER_PUSH true
 #endif
 
 #ifndef ARM_SWING_DUTY_CYCLE
@@ -23,7 +23,7 @@
 #endif
 
 #ifndef ARM_HOLD_DUTY_CYCLE
-#define ARM_HOLD_DUTY_CYCLE 35 // ~5V
+#define ARM_HOLD_DUTY_CYCLE 25 // ~5V
 #endif
 
 #ifndef OPEN_TIME
@@ -31,7 +31,7 @@
 #endif
 
 #ifndef CLOSE_TIME
-#define CLOSE_TIME 100
+#define CLOSE_TIME 200
 #endif
 
 void relayArms(bool);

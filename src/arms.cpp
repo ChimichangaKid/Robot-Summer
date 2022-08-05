@@ -2,6 +2,8 @@
 #include "./../include/pins.h"
 #include "./../include/bomb.h"
 #include "./../include/drive.h"
+#include "./../include/idol_detection.h"
+
 // #include <Arduino.h>
 
 void relayArms(bool mode){
@@ -193,11 +195,11 @@ void launchPickUpStatueThree(int side, short speed){
     delay(500);
     drive(65,30);
     delay(1500);
-    drive(-50,-50);
-    delay(1500);
-    drive(-50, -50);
-    delay(800);
-    drive(0,0);
+    while(!searchForIdolLeft()) {
+        drive(-50, -50);
+    }
+    drive(20, 20);
+    drive(0, 0);
     if (!launchBombDetectLeft()){   
         delay(1000);
         relayArms(true);
@@ -234,8 +236,8 @@ void launchPickUpStatueFour(int side, short speed){
     delay(200);
     drive(0,0);
     delay(500);
-    drive(30, 0);
-    delay(400);
+    drive(40, 0);
+    delay(600);
     drive(0,0);
     if (!launchBombDetectRight()){   
         delay(1000);
@@ -244,7 +246,7 @@ void launchPickUpStatueFour(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(65, 30);
-        delay(1000);
+        delay(800);
         drive(0,0);
         delay(1000);
         relayArms(true);

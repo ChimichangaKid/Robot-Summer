@@ -8,7 +8,10 @@
 #include "./../include/drive.h"
 #include <Arduino.h>
 
-#define IR_DRIVE_SPEED 40
+#define IR_DRIVE_SPEED 35
+
+#define LEFT 1
+#define RIGHT 0
 
 #define DESIRED_IR_ERROR 0
 #define DESIRED_IR_READING 20000
@@ -134,8 +137,25 @@ void infraredDrive(float error, float PID){
  * 
  * @param frequency_khz The frequency that the robot is searching for
  */
-void locateBeacon(short frequency_kHz){
-    do{
-        drive(0, 30);
-    } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+void locateBeacon(short frequency_kHz, short direction){
+    if(direction == LEFT){
+        do{
+            drive(0, 30);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
+    else {
+        do{
+            drive(30, 0);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
+    if(direction == LEFT){
+        do{
+            drive(0, 30);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
+    else {
+        do{
+            drive(30, 0);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
 }

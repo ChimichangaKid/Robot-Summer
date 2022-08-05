@@ -84,7 +84,7 @@ void sonarMeasureRight(){
     sonarEndMeasureMicroSRight = micros();
     distanceRight = (sonarEndMeasureMicroSRight-sonarStartMeasureMicroSRight) * 0.034 / 2;
 
-    if (distanceRight<IDOL_SEARCH_RADIUS_CM){
+    if (distanceRight<IDOL_SEARCH_RADIUS_CM_RIGHT){
       consecutiveDetectTallyRight++;
     }
     else{
@@ -102,7 +102,7 @@ void sonarMeasureLeft(){
     sonarEndMeasureMicroSLeft = micros();
     distanceLeft = (sonarEndMeasureMicroSLeft-sonarStartMeasureMicroSLeft) * 0.034 / 2;
 
-    if (distanceLeft<IDOL_SEARCH_RADIUS_CM){
+    if (distanceLeft<IDOL_SEARCH_RADIUS_CM_LEFT){
       consecutiveDetectTallyLeft++;
     }
     else{

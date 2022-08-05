@@ -52,18 +52,25 @@ void TapeTrack() {
     }
     if(prev_state == TURN_RIGHT) {
       //Turn right
-      drive(TURN_DUTY_CYCLE + 10, 0);
+      drive(TURN_DUTY_CYCLE + 25, 0);
     }
     if(prev_state == TURN_LEFT) {
       //Turn left
-      drive(0, TURN_DUTY_CYCLE + 10);
+      drive(0, TURN_DUTY_CYCLE + 25);
     }
   }
 }
 
 void find_Tape() {
   while(left_reading = analogRead(TAPE_INPUT_PIN_LEFT) < LEFT_TAPE_THRESHOLD) {
-    drive(-40, 0);
+    drive(-50, 0);
+  }
+  drive(0, 0);
+}
+
+void find_Tape_Bomb() {
+  while(left_reading = analogRead(TAPE_INPUT_PIN_LEFT) < LEFT_TAPE_THRESHOLD) {
+    drive(0, 50);
   }
   drive(0, 0);
 }

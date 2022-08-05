@@ -17,13 +17,14 @@ bool launchBombDetectRight(){
             servoAngle -= SERVO_ANGLE_INCREASE;
             delay(SWEEP_STEP_DELAY);
         }
-        bombServo.write(UPPER_LIMIT_SWEEP_RIGHT);
         if (bombDetected) {
             break;
         }
     }
-    return bombDetected;
+    bombServo.write(UPPER_LIMIT_SWEEP_RIGHT);
+    delay(400);
     bombServo.detach();
+    return bombDetected;
 }
 
 bool launchBombDetectLeft(){
@@ -45,6 +46,8 @@ bool launchBombDetectLeft(){
             break;
         }
     }
-    return bombDetected;
+    bombServo.write(UPPER_LIMIT_SWEEP_LEFT);
+    delay(400);
     bombServo.detach();
+    return bombDetected;
 }

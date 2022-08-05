@@ -32,6 +32,8 @@ float error;
 float ir_pid;
 bool is_turned = false;
 short current_state = STATE_TAPE_TRACK;
+bool bombdetected = false;
+float timeSinceBomb;
 
 void loop() {
   
@@ -51,14 +53,25 @@ void loop() {
     infraredDrive(error, ir_pid);
   }
   
-
+if(bombdetected){
+  if(millis() - timeSinceBomb == 3000){
+    bombdetected = false;
+  }
+}
+else{
   if(searchForIdolRight()){
     switch(statues_seen){
       case 0: // FIRST STATUE PICKUP
-          launchPickUpStatueOne(RIGHT, DEFAULT_SPEED);
-          drive(-70, -10);
-          delay(1000);
-          find_Tape();
+          bombdetected = launchPickUpStatueOne(RIGHT, DEFAULT_SPEED);
+          if (!bombdetected){
+            drive(-70, -10);
+            delay(1000);
+            find_Tape();
+          }
+          else{
+            timeSinceBomb = millis();
+            find_Tape_Bomb();
+          }
           statues_seen += 1;
           break;
       case 1: // SECOND STATUE PICKUP
@@ -78,16 +91,18 @@ void loop() {
     switch(statues_seen){
       case 2: // DETECTS THE ARCHWAY (CANNOT AVOID)
           drive(40,50);
-          delay(400);
+          delay(600);
           drive(0,0);
-          locateBeacon(ONE_KHZ);
+          locateBeacon(ONE_KHZ, LEFT);
           current_state = STATE_IR_1KHZ;
           statues_seen += 1;
           break;
 
       case 3: // THIRD STATUE PICKUP
-          launchPickUpStatueThree(LEFT, DEFAULT_SPEED);
-          locateBeacon(TEN_KHZ);
+          launchPickUpStatueThree(LEFT, 50);
+          drive(70,30);
+          delay(1200);
+          locateBeacon(TEN_KHZ, LEFT);
           current_state = STATE_IR_10KHZ;
           statues_seen += 1;
           break;
@@ -98,4 +113,6 @@ void loop() {
     }
     
   }
+}
+  
 }

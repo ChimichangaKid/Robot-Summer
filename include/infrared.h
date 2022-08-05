@@ -57,6 +57,6 @@ void infraredDrive(float error, float PID);
  * 
  * @param frequency_khz The frequency that the robot is searching for
  */
-void locateBeacon(short frequency_kHz);
+void locateBeacon(short frequency_kHz, short direction);
 
 #endif

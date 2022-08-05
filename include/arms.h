@@ -36,7 +36,7 @@
 
 void relayArms(bool);
 void setUpArm();
-void launchPickUpStatueOne(int side, short);
+bool launchPickUpStatueOne(int side, short);
 void launchPickUpStatueTwo(int side, short);
 void launchPickUpStatueThree(int, short);
 void launchPickUpStatueFour(int, short);

@@ -90,7 +90,7 @@ void wackArm(int side, int times){
     }
 }
 
-void launchPickUpStatueOne(int side, short speed){
+bool launchPickUpStatueOne(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
@@ -116,8 +116,18 @@ void launchPickUpStatueOne(int side, short speed){
             wackArm(side,1);
         } 
         if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
-        moveArm(side, CLOSE, true);
+        
+        //hold close the current arm
+        PinName THIS_PIN = holdArm(side);
+        delay(1200);
+        pwm_run(THIS_PIN,0);
+        //
+        
         delay(1000);
+        return false;
+    }
+    else{
+        return true;
     }
 }
 
@@ -129,32 +139,8 @@ void launchPickUpStatueTwo(int side, short speed){
     delay(700);
     drive(0, -50);
     delay(1100);
-    drive(50,50);
+    drive(50,60);
     delay(600);
-    drive(0,0);
-    if (true /*!launchBombDetect()*/){   
-        delay(1000);
-        relayArms(true);
-        delay(1000);
-        moveArm(side, OPEN, true);
-        delay(1000);
-        drive(40,40);
-        delay(200);
-        drive(0, 60);
-        delay(500);
-        drive(0,0);
-        delay(1000);
-        relayArms(true);
-        delay(1000);
-    /*drive(-25,-25);
-    delay(200);
-    drive(0,0);
-    drive(-50, -50);
-    delay(1000);
-    drive(60, 30);
-    delay(500);
-    drive(20, 60);
-    delay(500);
     drive(0,0);
     if (!launchBombDetectRight()){   
         delay(1000);
@@ -162,12 +148,14 @@ void launchPickUpStatueTwo(int side, short speed){
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(30,50);
-        delay(250);
+        drive(39,39);
+        delay(300);
+        drive(0, 60);
+        delay(400);
         drive(0,0);
         delay(1000);
         relayArms(true);
-        delay(1000);*/
+        delay(1000);
         PinName OPPOSITE_PIN;
         if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
         moveArm(side, CLOSE, true);
@@ -177,7 +165,23 @@ void launchPickUpStatueTwo(int side, short speed){
             delay(1000);
             wackArm(side,1);
         } 
+        
+        //hold close the current arm
+        PinName THIS_PIN = holdArm(side);
+        delay(1200);
+        pwm_run(THIS_PIN,0);
+        //
+        delay(1000);
         if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+    }
+    else{
+        delay(1000);
+        drive(40,40);
+        delay(200);
+        drive(0, 60);
+        delay(450);
+        drive(0,0);
+        delay(1000);
     }
 }
 
@@ -187,11 +191,11 @@ void launchPickUpStatueThree(int side, short speed){
     drive(0,0);
     drive(50,40);
     delay(500);
-    drive(65,40);
-    delay(1750);
-    drive(-50,-57);
+    drive(65,30);
     delay(1500);
-    drive(-55, -50);
+    drive(-50,-50);
+    delay(1500);
+    drive(-50, -50);
     delay(800);
     drive(0,0);
     if (!launchBombDetectLeft()){   
@@ -201,7 +205,7 @@ void launchPickUpStatueThree(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(speed-10, speed);
-        delay(1000);
+        delay(620);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -215,6 +219,12 @@ void launchPickUpStatueThree(int side, short speed){
             delay(1000);
             wackArm(side,1);
         } 
+         //hold close the current arm
+        PinName THIS_PIN = holdArm(side);
+        delay(1200);
+        pwm_run(THIS_PIN,0);
+        //
+        delay(1000);
         if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
     }
 }
@@ -223,14 +233,18 @@ void launchPickUpStatueFour(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
+    delay(500);
+    drive(30, 0);
+    delay(400);
+    drive(0,0);
     if (!launchBombDetectRight()){   
         delay(1000);
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(speed, speed);
-        delay(600);
+        drive(65, 30);
+        delay(1000);
         drive(0,0);
         delay(1000);
         relayArms(true);

@@ -19,15 +19,15 @@
 #endif
 
 #ifndef UPPER_LIMIT_SWEEP_RIGHT
-#define UPPER_LIMIT_SWEEP_RIGHT 1
+#define UPPER_LIMIT_SWEEP_RIGHT 13
 #endif
 
 #ifndef LOWER_LIMIT_SWEEP_LEFT
-#define LOWER_LIMIT_SWEEP_LEFT 40
+#define LOWER_LIMIT_SWEEP_LEFT 35
 #endif
 
 #ifndef LOWER_LIMIT_SWEEP_RIGHT
-#define LOWER_LIMIT_SWEEP_RIGHT 140
+#define LOWER_LIMIT_SWEEP_RIGHT 160
 #endif
 
 bool launchBombDetectRight();

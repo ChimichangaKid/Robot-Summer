@@ -2,7 +2,7 @@
 #include "./../include/pins.h"
 #include "./../include/bomb.h"
 #include "./../include/drive.h"
-#include "./../include/idol_detection.h"
+#include "./../include/idol-detection.h"
 
 // #include <Arduino.h>
 
@@ -136,11 +136,10 @@ bool launchPickUpStatueOne(int side, short speed){
 void launchPickUpStatueTwo(int side, short speed){
     drive(-25,-25);
     delay(200);
-    drive(0,0);
     drive(-50, 0);
-    delay(700);
+    delay(750);
     drive(0, -50);
-    delay(1100);
+    delay(1150);
     drive(50,60);
     delay(600);
     drive(0,0);
@@ -151,7 +150,7 @@ void launchPickUpStatueTwo(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(39,39);
-        delay(300);
+        delay(250);
         drive(0, 60);
         delay(400);
         drive(0,0);
@@ -195,9 +194,8 @@ void launchPickUpStatueThree(int side, short speed){
     delay(500);
     drive(65,30);
     delay(1500);
-    while(!searchForIdolLeft()) {
-        drive(-50, -50);
-    }
+    drive(-50, -50);
+    delay(2300);
     drive(20, 20);
     drive(0, 0);
     if (!launchBombDetectLeft()){   

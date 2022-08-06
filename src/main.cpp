@@ -38,7 +38,7 @@ float timeSinceBomb;
 void loop() {
   
   if(current_state == STATE_TAPE_TRACK){
-    TapeTrack();
+    TapeTrack(50);
   }
   
   if(current_state == STATE_IR_1KHZ){

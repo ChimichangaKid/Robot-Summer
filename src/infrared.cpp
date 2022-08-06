@@ -5,11 +5,16 @@
 //////////////////////////////////////////
 #include "./../include/infrared.h"   
 #include "./../include/pins.h"
+#include "./../include/drive.h"
 #include <Arduino.h>
 
-#define IR_DRIVE_SPEED 30
+#define IR_DRIVE_SPEED 35
+
+#define LEFT 1
+#define RIGHT 0
 
 #define DESIRED_IR_ERROR 0
+#define DESIRED_IR_READING 20000
 
 //////////////////////////////////////////
 // Variable Setup
@@ -92,9 +97,65 @@ float getDifferenceInIRReadings(short frequency_khz){
  * @param error The difference in the left and the right reading.
  */
 float infraredPIDControl(float error){
-    proportional = IR_K_PROPORTIONAL * error;
-    derivative = IR_K_DERIVATIVE * (error - last_error);
-    last_error = error;
+    float abs_error = abs(error);
+    if(abs_error < 1000){
+        abs_error = 0;
+    } else if (abs_error < 5000){
+        abs_error = 5000;
+    } else if(abs_error < 10000){
+        abs_error = 10000;
+    } else {
+        abs_error = 10000;
+    }
+    proportional = IR_K_PROPORTIONAL * abs_error;
+    derivative = IR_K_DERIVATIVE * (abs_error - last_error);
+    last_error = abs_error;
 
-    return proportional + derivative + IR_DRIVE_SPEED;
+    return proportional + derivative;
+}
+
+/**
+ * Determines the drive direction and speed of the IR following
+ * 
+ * @param error The difference in the left and the right reading.
+ * @param PID The PID calculation to adjust the speed of the driving.
+ */
+void infraredDrive(float error, float PID){
+    if (5000 > error && error > -5000){
+        drive(IR_DRIVE_SPEED, IR_DRIVE_SPEED);
+    }
+    else if(error > 5000){
+        drive(IR_DRIVE_SPEED + PID, IR_DRIVE_SPEED - PID);
+    }
+    else{
+        drive(IR_DRIVE_SPEED - PID, IR_DRIVE_SPEED + PID);
+    }
+}
+
+/**
+ * Rotates the robot until it sees the desired frequency beacon.
+ * 
+ * @param frequency_khz The frequency that the robot is searching for
+ */
+void locateBeacon(short frequency_kHz, short direction){
+    if(direction == LEFT){
+        do{
+            drive(0, 30);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
+    else {
+        do{
+            drive(30, 0);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
+    if(direction == LEFT){
+        do{
+            drive(0, 30);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
+    else {
+        do{
+            drive(30, 0);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }
 }

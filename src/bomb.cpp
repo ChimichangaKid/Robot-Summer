@@ -3,24 +3,51 @@
 #include "./../include/pins.h"
 #include "./../include/bomb.h"
 
-bool launchBombDetect(){
-    pinMode(BOMB_DETECT_SENSOR, INPUT_PULLUP);
+bool launchBombDetectRight(){
+    // ONLY WORKS WITH RIGHT SERVO
+    pinMode(BOMB_DETECT_SENSOR_RIGHT, INPUT_PULLUP);
     Servo bombServo;
-    bombServo.attach(BOMB_DETECT_SERVO);
+    bombServo.attach(BOMB_DETECT_SERVO_RIGHT);
     bool bombDetected = false;
     for (int sweep_count = 0; sweep_count < SWEEP_COUNTS; sweep_count++){
-        int servoAngle = 0;
-        while(servoAngle <= 180 && !bombDetected){
+        int servoAngle = UPPER_LIMIT_SWEEP_RIGHT;
+        while(servoAngle < LOWER_LIMIT_SWEEP_RIGHT && !bombDetected){
             bombServo.write(servoAngle);
-            bombDetected = 1 - digitalRead(BOMB_DETECT_SENSOR);
-            servoAngle += SERVO_ANGLE_INCREASE;
+            bombDetected = 1 - digitalRead(BOMB_DETECT_SENSOR_RIGHT);
+            servoAngle -= SERVO_ANGLE_INCREASE;
             delay(SWEEP_STEP_DELAY);
         }
-        bombServo.write(0);
         if (bombDetected) {
             break;
         }
     }
-    return bombDetected;
+    bombServo.write(UPPER_LIMIT_SWEEP_RIGHT);
+    delay(400);
     bombServo.detach();
+    return bombDetected;
+}
+
+bool launchBombDetectLeft(){
+    // ONLY WORKS WITH LEFT SERVO
+    pinMode(BOMB_DETECT_SENSOR_LEFT, INPUT_PULLUP);
+    Servo bombServo;
+    bombServo.attach(BOMB_DETECT_SERVO_LEFT);
+    bool bombDetected = false;
+    for (int sweep_count = 0; sweep_count < SWEEP_COUNTS; sweep_count++){
+        int servoAngle = UPPER_LIMIT_SWEEP_LEFT;
+        while(servoAngle > LOWER_LIMIT_SWEEP_LEFT && !bombDetected){
+            bombServo.write(servoAngle);
+            bombDetected = 1 - digitalRead(BOMB_DETECT_SENSOR_LEFT);
+            servoAngle += SERVO_ANGLE_INCREASE;
+            delay(SWEEP_STEP_DELAY);
+        }
+        bombServo.write(UPPER_LIMIT_SWEEP_LEFT);
+        if (bombDetected) {
+            break;
+        }
+    }
+    bombServo.write(UPPER_LIMIT_SWEEP_LEFT);
+    delay(400);
+    bombServo.detach();
+    return bombDetected;
 }

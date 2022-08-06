@@ -6,21 +6,42 @@
 #include "../include/idol-detection.h"
 #include "../include/pins.h"
 
-volatile long duration; // variable for the duration of sound wave travel
-volatile int distance; // variable for the distance measurement
+volatile long durationLeft; // variable for the duration of sound wave travel
+volatile int distanceLeft; // variable for the distance measurement
 
-volatile bool sonarInProgress = false;
-volatile unsigned long sonarStartMeasureMicroS = 0;
-volatile unsigned long sonarEndMeasureMicroS = 0;
-volatile int consecutiveDetectTally = 0;
+volatile long durationRight; // variable for the duration of sound wave travel
+volatile int distanceRight; // variable for the distance measurement
 
-bool searchForIdol(){
-  if(consecutiveDetectTally>CONSECUTIVE_DETECT_THRESHOLD){
-    consecutiveDetectTally = 0;
+volatile bool sonarInProgressLeft = false;
+volatile unsigned long sonarStartMeasureMicroSLeft = 0;
+volatile unsigned long sonarEndMeasureMicroSLeft = 0;
+volatile int consecutiveDetectTallyLeft = 0;
+
+volatile bool sonarInProgressRight = false;
+volatile unsigned long sonarStartMeasureMicroSRight = 0;
+volatile unsigned long sonarEndMeasureMicroSRight = 0;
+volatile int consecutiveDetectTallyRight = 0;
+
+bool searchForIdolRight(){
+  if(consecutiveDetectTallyRight>=CONSECUTIVE_DETECT_THRESHOLD){
+    consecutiveDetectTallyRight = 0;
     return true;
   }
   else{
-    if (!sonarInProgress){
+    if (!sonarInProgressRight){
+      triggerSonar();
+      }
+    return false;
+  }
+}
+
+bool searchForIdolLeft(){
+  if(consecutiveDetectTallyLeft>=CONSECUTIVE_DETECT_THRESHOLD){
+    consecutiveDetectTallyLeft = 0;
+    return true;
+  }
+  else{
+    if (!sonarInProgressLeft){
       triggerSonar();
       }
     return false;
@@ -28,38 +49,65 @@ bool searchForIdol(){
 }
 
 void sonarSetup(){
-  pinMode(TRIGGER_PIN, OUTPUT); // Sets the TRIGGER_PIN as an OUTPUT
-  pinMode(ECHO_PIN, INPUT); // Sets the echoPin as an INPUT
+  pinMode(TRIGGER_PIN_RIGHT, OUTPUT); // Sets the TRIGGER_PIN as an OUTPUT
+  pinMode(ECHO_PIN_RIGHT, INPUT); // Sets the echoPin as an INPUT
 
+  pinMode(TRIGGER_PIN_LEFT, OUTPUT); // Sets the TRIGGER_PIN as an OUTPUT
+  pinMode(ECHO_PIN_LEFT, INPUT); // Sets the echoPin as an INPUT
   //Attach external IRQ pin to IRQ handler
-  attachInterrupt(digitalPinToInterrupt(ECHO_PIN), sonarMeasure, CHANGE);
+  delay(1000);
+  attachInterrupt(digitalPinToInterrupt(ECHO_PIN_RIGHT), sonarMeasureRight, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ECHO_PIN_LEFT), sonarMeasureLeft, CHANGE);
+  
 }
 
 void triggerSonar(){
-  sonarInProgress=true;
+  sonarInProgressRight=true;
+  sonarInProgressLeft=true;
   // Clears the TRIGGER_PIN condition
-  digitalWrite(TRIGGER_PIN, LOW);
+  digitalWrite(TRIGGER_PIN_RIGHT, LOW);
+  digitalWrite(TRIGGER_PIN_LEFT, LOW);
   delayMicroseconds(2);
   // Sets the TRIGGER_PIN HIGH (ACTIVE) for 10 microseconds
-  digitalWrite(TRIGGER_PIN, HIGH);
+  digitalWrite(TRIGGER_PIN_LEFT, HIGH);
+  digitalWrite(TRIGGER_PIN_RIGHT, HIGH);
   delayMicroseconds(10);
-  digitalWrite(TRIGGER_PIN, LOW);
+  digitalWrite(TRIGGER_PIN_LEFT, LOW);
+  digitalWrite(TRIGGER_PIN_RIGHT, LOW);
 }
 
-void sonarMeasure(){
-  if (sonarEndMeasureMicroS >= sonarStartMeasureMicroS){
-  sonarStartMeasureMicroS = micros();
+void sonarMeasureRight(){
+  if (sonarEndMeasureMicroSRight >= sonarStartMeasureMicroSRight){
+  sonarStartMeasureMicroSRight = micros();
   }
   else {
-    sonarEndMeasureMicroS = micros();
-    distance = (sonarEndMeasureMicroS-sonarStartMeasureMicroS) * 0.034 / 2;
-    
-    if (distance<IDOL_SEARCH_RADIUS_CM){
-      consecutiveDetectTally++;
+    sonarEndMeasureMicroSRight = micros();
+    distanceRight = (sonarEndMeasureMicroSRight-sonarStartMeasureMicroSRight) * 0.034 / 2;
+
+    if (distanceRight<IDOL_SEARCH_RADIUS_CM_RIGHT){
+      consecutiveDetectTallyRight++;
     }
     else{
-    consecutiveDetectTally=0;
+    consecutiveDetectTallyRight=0;
     }
-    sonarInProgress=false;
+    sonarInProgressRight=false;
+  }
+}
+
+void sonarMeasureLeft(){
+  if (sonarEndMeasureMicroSLeft >= sonarStartMeasureMicroSLeft){
+  sonarStartMeasureMicroSLeft = micros();
+  }
+  else {
+    sonarEndMeasureMicroSLeft = micros();
+    distanceLeft = (sonarEndMeasureMicroSLeft-sonarStartMeasureMicroSLeft) * 0.034 / 2;
+
+    if (distanceLeft<IDOL_SEARCH_RADIUS_CM_LEFT){
+      consecutiveDetectTallyLeft++;
+    }
+    else{
+    consecutiveDetectTallyLeft=0;
+    }
+    sonarInProgressLeft=false;
   }
 }

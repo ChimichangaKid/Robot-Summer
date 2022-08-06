@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#define LEFT_TAPE_THRESHOLD 710
-#define RIGHT_TAPE_THRESHOLD 720
+#define LEFT_TAPE_THRESHOLD 700
+#define RIGHT_TAPE_THRESHOLD 700
 
 #define ON_DUTY_CYCLE 50
 #define TURN_DUTY_CYCLE 50
@@ -13,3 +13,5 @@
 
 void TapeTrack();
 void setup_TapeTrack();
+void find_Tape();
+void find_Tape_Bomb();

@@ -11,7 +11,7 @@
 #define CLOSE -1
 
 #ifndef HOLD_OPPOSITE_ARM
-#define HOLD_OPPOSITE_ARM false
+#define HOLD_OPPOSITE_ARM true
 #endif
 
 #ifndef FURTHER_PUSH
@@ -19,21 +19,26 @@
 #endif
 
 #ifndef ARM_SWING_DUTY_CYCLE
-#define ARM_SWING_DUTY_CYCLE 50 // ~12V (quick as possible)
+#define ARM_SWING_DUTY_CYCLE 70 // ~12V (quick as possible)
 #endif
 
 #ifndef ARM_HOLD_DUTY_CYCLE
-#define ARM_HOLD_DUTY_CYCLE 35 // ~5V
+#define ARM_HOLD_DUTY_CYCLE 25 // ~5V
 #endif
 
 #ifndef OPEN_TIME
-#define OPEN_TIME 200
+#define OPEN_TIME 60
 #endif
 
 #ifndef CLOSE_TIME
 #define CLOSE_TIME 300
 #endif
 
+void relayArms(bool);
 void setUpArm();
-void launchPickUp(int side);
+bool launchPickUpStatueOne(int side, short);
+void launchPickUpStatueTwo(int side, short);
+void launchPickUpStatueThree(int, short);
+void launchPickUpStatueFour(int, short);
+void launchPickUpStatueFive(int, short);
 PinName moveArm(int side, int direction, bool timedStop);

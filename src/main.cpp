@@ -77,6 +77,8 @@ else{
       case 1: // SECOND STATUE PICKUP
           launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
           find_Tape();
+          drive(35, 60);
+          delay(350);
           statues_seen += 1;
           break;
       

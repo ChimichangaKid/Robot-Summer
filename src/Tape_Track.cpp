@@ -18,7 +18,7 @@ void setup_TapeTrack(){
 }
 
 //Add into Loop
-void TapeTrack() {
+void TapeTrack(int speed) {
   // Update the reading of the tape tracker
   left_reading = analogRead(TAPE_INPUT_PIN_LEFT);
   right_reading = analogRead(TAPE_INPUT_PIN_RIGHT);
@@ -26,21 +26,21 @@ void TapeTrack() {
   // Right is on tape left is not, need to turn right
   if(right_reading >= RIGHT_TAPE_THRESHOLD && left_reading < LEFT_TAPE_THRESHOLD)
   {
-    drive(TURN_DUTY_CYCLE, TURN_DUTY_CYCLE - (Kp * (right_reading - RIGHT_TAPE_THRESHOLD)));
+    drive(speed, speed - (Kp * (right_reading - RIGHT_TAPE_THRESHOLD)));
     prev_state = TURN_RIGHT;
   }
 
   // Left is on tape right is not, need to turn left
   else if(left_reading >= LEFT_TAPE_THRESHOLD && right_reading < RIGHT_TAPE_THRESHOLD)
   {
-    drive(TURN_DUTY_CYCLE - (Kp * (left_reading - LEFT_TAPE_THRESHOLD)), TURN_DUTY_CYCLE);
+    drive(speed - (Kp * (left_reading - LEFT_TAPE_THRESHOLD)), speed);
     prev_state = TURN_LEFT;
   }
 
   // Both are on the tape, turn both motors on
   else if(right_reading >= RIGHT_TAPE_THRESHOLD && left_reading >= LEFT_TAPE_THRESHOLD)
   {
-    drive(ON_DUTY_CYCLE, ON_DUTY_CYCLE);
+    drive(speed, speed);
     prev_state = STRAIGHT;
   }
 
@@ -48,15 +48,15 @@ void TapeTrack() {
   else if(right_reading < RIGHT_TAPE_THRESHOLD && left_reading < LEFT_TAPE_THRESHOLD)
   {
     if(prev_state == STRAIGHT) {
-      drive(ON_DUTY_CYCLE, ON_DUTY_CYCLE);
+      drive(speed, speed);
     }
     if(prev_state == TURN_RIGHT) {
       //Turn right
-      drive(TURN_DUTY_CYCLE + 25, 0);
+      drive(speed + 25, 0);
     }
     if(prev_state == TURN_LEFT) {
       //Turn left
-      drive(0, TURN_DUTY_CYCLE + 25);
+      drive(0, speed + 25);
     }
   }
 }

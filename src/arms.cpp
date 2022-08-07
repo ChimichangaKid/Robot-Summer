@@ -71,23 +71,47 @@ PinName holdArm(int side)
     return activateArm(side, CLOSE, false, ARM_HOLD_DUTY_CYCLE);
 }
 
+void takeInProcedure(int side){
+    PinName OPPOSITE_PIN;
+    if (HOLD_OPPOSITE_ARM)
+        OPPOSITE_PIN = holdArm(1 - side);
+    moveArm(side, CLOSE, true);
+    delay(1000);
+    // push statues further inside
+    if (FURTHER_PUSH)
+    {
+        delay(1000);
+        wackArm(side, 1);
+    }
+    delay(500);
+    if (HOLD_OPPOSITE_ARM)
+        pwm_run(OPPOSITE_PIN, 0);
+    // hold close the current arm
+    PinName THIS_PIN = holdArm(side);
+    delay(1200);
+    pwm_run(THIS_PIN, 0);
+    //
+    delay(500);
+}
+
 void wackArm(int side, int times){
     for (int i = 0; i < times; i++)
     {
         if (side == BOTH){
-            PinName highPinR = moveArm(RIGHT, OPEN, false);
-            PinName highPinL = moveArm(LEFT, OPEN, false);
+            PinName highPinR = activateArm(RIGHT, OPEN, false, WACK_BOTH_DUTY_CYCLE);
+            PinName highPinL = activateArm(LEFT, OPEN, false, WACK_BOTH_DUTY_CYCLE);
             delay(OPEN_TIME);
             pwm_run(highPinR, 0);
             pwm_run(highPinL, 0);
-            highPinR = moveArm(RIGHT, CLOSE,false);
-            highPinL = moveArm(LEFT, CLOSE, false);
+            highPinR = activateArm(RIGHT, CLOSE, false, WACK_BOTH_DUTY_CYCLE);
+            highPinL = activateArm(LEFT, CLOSE, false, WACK_BOTH_DUTY_CYCLE);
             delay(CLOSE_TIME);
             pwm_run(highPinR, 0);
             pwm_run(highPinL, 0);
         } else {
-            moveArm(side,OPEN,true);
-            moveArm(side,CLOSE,true);
+            activateArm(side, OPEN, true, WACK_BOTH_DUTY_CYCLE);
+            delay(1000);
+            activateArm(side, CLOSE, true, WACK_BOTH_DUTY_CYCLE);
         }
     }
 }
@@ -108,24 +132,7 @@ bool launchPickUpStatueOne(int side, short speed){
         delay(1000);
         relayArms(true);
         delay(1000);
-        PinName OPPOSITE_PIN;
-        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
-        moveArm(side, CLOSE, true);
-        delay(1000);
-        // push statues further inside
-        if (FURTHER_PUSH){
-            delay(1000);
-            wackArm(side,1);
-        } 
-        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
-        
-        //hold close the current arm
-        PinName THIS_PIN = holdArm(side);
-        delay(1200);
-        pwm_run(THIS_PIN,0);
-        //
-        
-        delay(1000);
+        takeInProcedure(side);
         return false;
     }
     else{
@@ -157,23 +164,7 @@ void launchPickUpStatueTwo(int side, short speed){
         delay(1000);
         relayArms(true);
         delay(1000);
-        PinName OPPOSITE_PIN;
-        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
-        moveArm(side, CLOSE, true);
-        delay(1000);
-        // push statues further inside
-        if (FURTHER_PUSH){
-            delay(1000);
-            wackArm(side,1);
-        } 
-        
-        //hold close the current arm
-        PinName THIS_PIN = holdArm(side);
-        delay(1200);
-        pwm_run(THIS_PIN,0);
-        //
-        delay(1000);
-        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+        takeInProcedure(side);
     }
     else{
         delay(1000);
@@ -210,22 +201,7 @@ void launchPickUpStatueThree(int side, short speed){
         delay(1000);
         relayArms(true);
         delay(1000);
-        PinName OPPOSITE_PIN;
-        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
-        moveArm(side, CLOSE, true);
-        delay(1000);
-        // push statues further inside
-        if (FURTHER_PUSH){
-            delay(1000);
-            wackArm(side,1);
-        } 
-         //hold close the current arm
-        PinName THIS_PIN = holdArm(side);
-        delay(1200);
-        pwm_run(THIS_PIN,0);
-        //
-        delay(1000);
-        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+        takeInProcedure(side);
     }
 }
 
@@ -249,22 +225,11 @@ void launchPickUpStatueFour(int side, short speed){
         delay(1000);
         relayArms(true);
         delay(1000);
-        PinName OPPOSITE_PIN;
-        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
-        moveArm(side, CLOSE, true);
-        delay(1000);
-        // push statues further inside
-        if (FURTHER_PUSH){
-            delay(1000);
-            wackArm(side,1);
-        } 
-        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+        takeInProcedure(side);
     }
 }
 
 void launchPickUpStatueFive(int side, short speed){
-    drive(-25,-25);
-    delay(200);
     drive(0,0);
     if (!launchBombDetectLeft()){   
         delay(1000);
@@ -278,16 +243,7 @@ void launchPickUpStatueFive(int side, short speed){
         delay(1000);
         relayArms(true);
         delay(1000);
-        PinName OPPOSITE_PIN;
-        if (HOLD_OPPOSITE_ARM) OPPOSITE_PIN = holdArm(1 - side);
-        moveArm(side, CLOSE, true);
-        delay(1000);
-        // push statues further inside
-        if (FURTHER_PUSH){
-            delay(1000);
-            wackArm(side,1);
-        } 
-        if (HOLD_OPPOSITE_ARM) pwm_run(OPPOSITE_PIN,0);
+        takeInProcedure(side);
     }
 }
 

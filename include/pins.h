@@ -1,12 +1,12 @@
 #include <Arduino.h>
 
-/* Driver Pin */
+/* DRIVER PINS */
 #define RIGHT_DRIVE_A PB_8
 #define RIGHT_DRIVE_B PB_9
 #define LEFT_DRIVE_A PA_8
 #define LEFT_DRIVE_B PA_9
 
-/* Relay Pins */
+/* RELAY PINS */
 #define RELAY_CH1 PB13 // Left Arm
 #define RELAY_CH2 PB14 // Right Arm
 #define RELAY_CH3 PB12
@@ -33,3 +33,9 @@
 
 #define ECHO_PIN_LEFT PA11
 #define TRIGGER_PIN_LEFT PA12
+
+/* WALL PINS */
+#define LIMIT_SWITCH_WALL PB6
+
+/* RELEASE PINS */
+#define RELEASE_SERVO PB5

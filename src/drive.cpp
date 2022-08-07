@@ -22,6 +22,11 @@ void drive(int speedL, int speedR) {
         digitalWrite(RELAY_CH2, 0);
         digitalWrite(RELAY_CH3, 0);
 
+        // suggested change to calibrate to new battery voltage
+        speedL = (int) speedL * 16.0/12.0;
+        speedR = (int) speedR * 16.0/12.0;
+        //
+
         if(speedL > 100) speedL = 100;
         if(speedL < -100) speedL = -100;
         if(speedR > 100) speedR = 100;

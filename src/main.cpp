@@ -9,22 +9,23 @@
 #include "../include/infrared.h"
 #include "../include/wall.h"
 #include "../include/bomb.h"
-
+#include "../include/release.h"
 
 #include <Arduino.h>
-
 
 #define STATE_TAPE_TRACK 1
 #define STATE_IR_1KHZ 2
 #define STATE_IR_10KHZ 3
+#define STATE_ON_BRIDGE 4
+#define STATE_DROP_OFF 5
 
 #define DEFAULT_SPEED 25
-
 
 void setup() {
     drive_setup();
     setup_TapeTrack();
     sonarSetup();
+    setUpWall();
 }
 
 short statues_seen = 0;
@@ -34,6 +35,7 @@ bool is_turned = false;
 short current_state = STATE_TAPE_TRACK;
 bool bombdetected = false;
 float timeSinceBomb;
+bool course_finished = false;
 
 void loop() {
   
@@ -52,7 +54,25 @@ void loop() {
     ir_pid = infraredPIDControl(error);
     infraredDrive(error, ir_pid);
   }
-  
+
+  if(current_state == STATE_ON_BRIDGE){
+    // tape track at lower speed
+    // for some time
+  }
+
+  if (current_state == STATE_DROP_OFF){
+    drive(30,30);
+    while(!searchForIdolRight()); // drive forward until right sensor detects the pole
+    drive(0,0);
+    delay(200); 
+    drive(20,20); // drive further forward to peak beyond the edge
+    delay(500);
+    releaseTrapDoor();
+    delay(500);
+    launchWall();
+    course_finished = true;
+    delay(120000);
+  }
 if(bombdetected){
   if(millis() - timeSinceBomb == 3000){
     bombdetected = false;
@@ -84,6 +104,8 @@ else{
       
       case 4: // FOURTH STATUE PICKUP
           launchPickUpStatueFour(RIGHT, DEFAULT_SPEED);
+          releaseBridge(); // navigation included
+          current_state = STATE_ON_BRIDGE;
           statues_seen += 1;
           break;
       }
@@ -99,7 +121,6 @@ else{
           current_state = STATE_IR_1KHZ;
           statues_seen += 1;
           break;
-
       case 3: // THIRD STATUE PICKUP
           launchPickUpStatueThree(LEFT, 50);
           drive(70,30);
@@ -110,11 +131,16 @@ else{
           break;
       case 5: // FIFTH STATUE PICKUP
           launchPickUpStatueFive(LEFT, DEFAULT_SPEED);
+          current_state = STATE_DROP_OFF;
           statues_seen += 1;
           break;
     }
     
   }
 }
-  
 }
+
+// void loop(){
+//   launchWall();
+//   delay(500);
+// }

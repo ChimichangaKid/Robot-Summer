@@ -5,7 +5,8 @@
 
 bool launchBombDetectRight(){
     // ONLY WORKS WITH RIGHT SERVO
-    pinMode(BOMB_DETECT_SENSOR_RIGHT, INPUT_PULLUP);
+    pinMode(BOMB_DETECT_SENSOR_RIGHT, INPUT);
+    delay(200);
     Servo bombServo;
     bombServo.attach(BOMB_DETECT_SERVO_RIGHT);
     bool bombDetected = false;
@@ -29,7 +30,8 @@ bool launchBombDetectRight(){
 
 bool launchBombDetectLeft(){
     // ONLY WORKS WITH LEFT SERVO
-    pinMode(BOMB_DETECT_SENSOR_LEFT, INPUT_PULLUP);
+    pinMode(BOMB_DETECT_SENSOR_LEFT, INPUT);
+    delay(200);
     Servo bombServo;
     bombServo.attach(BOMB_DETECT_SERVO_LEFT);
     bool bombDetected = false;
@@ -41,7 +43,6 @@ bool launchBombDetectLeft(){
             servoAngle += SERVO_ANGLE_INCREASE;
             delay(SWEEP_STEP_DELAY);
         }
-        bombServo.write(UPPER_LIMIT_SWEEP_LEFT);
         if (bombDetected) {
             break;
         }

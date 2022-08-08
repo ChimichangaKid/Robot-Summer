@@ -19,19 +19,19 @@
 #endif
 
 #ifndef ARM_SWING_DUTY_CYCLE
-#define ARM_SWING_DUTY_CYCLE 95 // ~11-12V
+#define ARM_SWING_DUTY_CYCLE 85 // ~11-12V
 #endif
 
 #ifndef ARM_HOLD_DUTY_CYCLE
-#define ARM_HOLD_DUTY_CYCLE 20 // ~4V
+#define ARM_HOLD_DUTY_CYCLE 40 // ~4V
 #endif
 
 #ifndef WACK_BOTH_DUTY_CYCLE
-#define WACK_BOTH_DUTY_CYCLE 40 // ~5V
+#define WACK_BOTH_DUTY_CYCLE 30 // ~5V
 #endif
 
 #ifndef OPEN_TIME
-#define OPEN_TIME 60
+#define OPEN_TIME 50
 #endif
 
 #ifndef CLOSE_TIME

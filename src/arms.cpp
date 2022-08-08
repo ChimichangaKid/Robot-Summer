@@ -76,20 +76,20 @@ void takeInProcedure(int side){
     if (HOLD_OPPOSITE_ARM)
         OPPOSITE_PIN = holdArm(1 - side);
     moveArm(side, CLOSE, true);
-    delay(1000);
     // push statues further inside
     if (FURTHER_PUSH)
     {
         delay(1000);
         wackArm(side, 1);
     }
-    delay(500);
-    if (HOLD_OPPOSITE_ARM)
-        pwm_run(OPPOSITE_PIN, 0);
+    // delay(500);
+    
     // hold close the current arm
     PinName THIS_PIN = holdArm(side);
     delay(1200);
     pwm_run(THIS_PIN, 0);
+    if (HOLD_OPPOSITE_ARM)
+        pwm_run(OPPOSITE_PIN, 0);
     //
     delay(500);
 }
@@ -109,9 +109,9 @@ void wackArm(int side, int times){
             pwm_run(highPinR, 0);
             pwm_run(highPinL, 0);
         } else {
-            activateArm(side, OPEN, true, WACK_BOTH_DUTY_CYCLE);
-            delay(1000);
-            activateArm(side, CLOSE, true, WACK_BOTH_DUTY_CYCLE);
+            activateArm(side, OPEN, true, ARM_SWING_DUTY_CYCLE);
+            // delay(1000);
+            activateArm(side, CLOSE, true, ARM_SWING_DUTY_CYCLE);
         }
     }
 }
@@ -146,7 +146,7 @@ void launchPickUpStatueTwo(int side, short speed){
     drive(-50, 0);
     delay(750);
     drive(0, -50);
-    delay(1150);
+    delay(1200);
     drive(50,60);
     delay(600);
     drive(0,0);
@@ -157,7 +157,7 @@ void launchPickUpStatueTwo(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(39,39);
-        delay(250);
+        delay(350);
         drive(0, 60);
         delay(400);
         drive(0,0);

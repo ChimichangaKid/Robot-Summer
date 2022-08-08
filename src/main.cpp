@@ -87,10 +87,20 @@ else{
             drive(-70, -10);
             delay(1000);
             find_Tape();
+            drive(-50, 0);
+            delay(200);
+            drive(50, 50);
+            delay(2000);
+            find_Tape();
           }
           else{
             timeSinceBomb = millis();
             find_Tape_Bomb();
+            drive(0, 50);
+            delay(200);
+            drive(50, 50);
+            delay(2000);
+            find_Tape();
           }
           statues_seen += 1;
           break;

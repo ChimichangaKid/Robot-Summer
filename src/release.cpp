@@ -14,7 +14,7 @@ void releaseBridge(){
     drive(0, 0);
     delay(100);
     drive(20, -70); // steer to face the edge
-    delay(500);
+    delay(750);
     drive(30, 30); // drive forward to get to the edge
     delay(500);
 

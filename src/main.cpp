@@ -90,7 +90,7 @@ else{
             drive(-50, 0);
             delay(200);
             drive(50, 50);
-            delay(2000);
+            delay(2300);
             find_Tape();
           }
           else{
@@ -99,7 +99,7 @@ else{
             drive(0, 50);
             delay(200);
             drive(50, 50);
-            delay(2000);
+            delay(2300);
             find_Tape();
           }
           statues_seen += 1;
@@ -108,7 +108,7 @@ else{
           launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
           find_Tape();
           drive(40, 60);
-          delay(350);
+          delay(380);
           statues_seen += 1;
           break;
       

@@ -146,9 +146,9 @@ void launchPickUpStatueTwo(int side, short speed){
     drive(-50, 0);
     delay(750);
     drive(0, -50);
-    delay(1200);
-    drive(50,60);
-    delay(600);
+    delay(1300);
+    drive(40,60);
+    delay(700);
     drive(0,0);
     if (!launchBombDetectRight()){   
         delay(1000);
@@ -157,7 +157,7 @@ void launchPickUpStatueTwo(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(39,39);
-        delay(350);
+        delay(250);
         drive(0, 60);
         delay(400);
         drive(0,0);

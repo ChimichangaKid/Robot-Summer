@@ -35,7 +35,7 @@
 #endif
 
 #ifndef CLOSE_TIME
-#define CLOSE_TIME 200
+#define CLOSE_TIME 300
 #endif
 
 void relayArms(bool);

@@ -14,18 +14,21 @@ void releaseBridge(){
     drive(0, 0);
     delay(100);
     drive(20, -70); // steer to face the edge
-    delay(750);
+    delay(900);
     drive(30, 30); // drive forward to get to the edge
     delay(500);
-
+    drive(-30, -30);
+    delay(400);
+    drive(0, 0);
+    delay(300);
     // release bridge
     Servo bridgeServo;
     bridgeServo.attach(RELEASE_SERVO);
-    bridgeServo.write(90);
+    bridgeServo.write(170);
 }
 
 void releaseTrapDoor(){
     Servo trapDoorServo;
     trapDoorServo.attach(RELEASE_SERVO);
-    trapDoorServo.write(180);
+    trapDoorServo.write(0);
 }

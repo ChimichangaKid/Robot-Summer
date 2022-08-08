@@ -88,27 +88,36 @@ else{
             delay(1000);
             find_Tape();
             drive(-50, 0);
-            delay(200);
+            delay(240);
             drive(50, 50);
-            delay(2300);
-            find_Tape();
+            delay(2700);
+            drive(0, -60);
+            find_Tape_Sweep();
           }
           else{
             timeSinceBomb = millis();
             find_Tape_Bomb();
             drive(0, 50);
-            delay(200);
+            delay(270);
             drive(50, 50);
-            delay(2300);
-            find_Tape();
+            delay(2000);
+            find_Tape_Sweep();
           }
           statues_seen += 1;
           break;
       case 1: // SECOND STATUE PICKUP
           launchPickUpStatueTwo(RIGHT, DEFAULT_SPEED);
           find_Tape();
-          drive(40, 60);
-          delay(380);
+          drive(40, 65);
+          delay(450);
+          drive(30, 30);
+          while(!searchForIdolLeft());
+          drive(40,50);
+          delay(500);
+          drive(0,0);
+          locateBeacon(ONE_KHZ, LEFT);
+          current_state = STATE_IR_1KHZ;
+          statues_seen += 1;
           statues_seen += 1;
           break;
       

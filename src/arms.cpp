@@ -159,7 +159,7 @@ void launchPickUpStatueTwo(int side, short speed){
         drive(39,39);
         delay(250);
         drive(0, 60);
-        delay(400);
+        delay(450);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -181,10 +181,8 @@ void launchPickUpStatueThree(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
-    drive(50,40);
-    delay(500);
     drive(65,30);
-    delay(1500);
+    delay(2000);
     drive(-50, -50);
     delay(2300);
     drive(20, 20);

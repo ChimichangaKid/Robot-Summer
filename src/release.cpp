@@ -5,11 +5,16 @@
 
 #include <Servo.h>
 
+void releaseSetup() {
+    Servo bridgeServo;
+    bridgeServo.attach(RELEASE_SERVO);
+    bridgeServo.write(175);
+    bridgeServo.detach();
+}
+
 void releaseBridge(){
     // navigation
-    drive(-70, 20); // steer outward from rocks
-    delay(700);
-    drive(20, 20); // go forward slowly until detects the 10 kHz beacon
+    drive(23, 20); // go forward slowly until detects the 10 kHz beacon
     while (!searchForIdolLeft()); // detects the 10kHz beacon
     drive(0, 0);
     delay(100);
@@ -17,14 +22,14 @@ void releaseBridge(){
     delay(900);
     drive(30, 30); // drive forward to get to the edge
     delay(500);
-    drive(-30, -30);
-    delay(400);
+    drive(-40, -40);
+    delay(500);
     drive(0, 0);
     delay(300);
     // release bridge
     Servo bridgeServo;
     bridgeServo.attach(RELEASE_SERVO);
-    bridgeServo.write(170);
+    bridgeServo.write(165);
 }
 
 void releaseTrapDoor(){

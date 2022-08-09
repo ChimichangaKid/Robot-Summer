@@ -5,3 +5,4 @@
 
 void releaseBridge();
 void releaseTrapDoor();
+void releaseSetup();

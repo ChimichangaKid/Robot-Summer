@@ -76,6 +76,9 @@ void takeInProcedure(int side){
     if (HOLD_OPPOSITE_ARM)
         OPPOSITE_PIN = holdArm(1 - side);
     moveArm(side, CLOSE, true);
+    PinName THIS_PIN = holdArm(side);
+    delay(1000);
+    pwm_run(THIS_PIN, 0);
     // push statues further inside
     if (FURTHER_PUSH)
     {
@@ -85,7 +88,7 @@ void takeInProcedure(int side){
     // delay(500);
     
     // hold close the current arm
-    PinName THIS_PIN = holdArm(side);
+    THIS_PIN = holdArm(side);
     delay(1200);
     pwm_run(THIS_PIN, 0);
     if (HOLD_OPPOSITE_ARM)
@@ -146,9 +149,9 @@ void launchPickUpStatueTwo(int side, short speed){
     drive(-50, 0);
     delay(570);
     drive(0, -50);
-    delay(1120);
-    drive(40,60);
-    delay(700);
+    delay(1050);
+    drive(40,63);
+    delay(910);
     drive(0,0);
     if (!launchBombDetectRight()){   
         delay(1000);
@@ -158,8 +161,8 @@ void launchPickUpStatueTwo(int side, short speed){
         delay(1000);
         // drive(39,39);
         // delay(250);
-        drive(0, 30);
-        delay(750);
+        drive(17, 38);
+        delay(710);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -187,14 +190,14 @@ void launchPickUpStatueThree(int side){
     // drive(-50, -50);
     // delay(2800);
     drive(0,0);
-    if (!launchBombDetectLeft()){   
+    if (!launchBombDetectLeft() || true){   
         delay(1000);
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(40, 50);
-        delay(580);
+        drive(50, 15);
+        delay(450);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -205,11 +208,7 @@ void launchPickUpStatueThree(int side){
 
 void launchPickUpStatueFour(int side, short speed){
     drive(-25,-25);
-    delay(200);
-    drive(0,0);
-    delay(500);
-    drive(40, 0);
-    delay(600);
+    delay(350);
     drive(0,0);
     if (!launchBombDetectRight()){   
         delay(1000);
@@ -217,8 +216,8 @@ void launchPickUpStatueFour(int side, short speed){
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(65, 30);
-        delay(800);
+        drive(50, 50);
+        delay(600);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -236,7 +235,7 @@ void launchPickUpStatueFive(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(speed, speed);
-        delay(600);
+        delay(650);
         drive(0,0);
         delay(1000);
         relayArms(true);

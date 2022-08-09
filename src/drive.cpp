@@ -31,6 +31,18 @@ void drive(int speedL, int speedR) {
         if(speedL < -100) speedL = -100;
         if(speedR > 100) speedR = 100;
         if(speedR < -100) speedR = -100;
+        if(speedL > 0 && speedL < 10) {
+                speedL = 10;
+        }
+        if(speedL < 0 && speedL > -10) {
+                speedL = -10;
+        }
+        if(speedR > 0 && speedR < 10) {
+                speedR = 10;
+        }
+        if(speedR < 0 && speedR > -10) {
+                speedR = -10;
+        }
 
         if (speedL >= 0) {
                 pwm_start(LEFT_DRIVE_B, MOTOR_PWM_FREQUENCY_HZ, 0,

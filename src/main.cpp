@@ -26,6 +26,7 @@ void setup() {
     setup_TapeTrack();
     sonarSetup();
     setUpWall();
+    releaseSetup();
 }
 
 short statues_seen = 0;
@@ -37,9 +38,16 @@ bool bombdetected = false;
 float timeSinceBomb;
 bool course_finished = false;
 
+int bridgeStartTime = 0;
+
 void loop() {
   if(current_state == STATE_TAPE_TRACK){
-    TapeTrack();
+    if(statues_seen == 0) {
+      TapeTrack(50, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, Kp);
+    }
+    if(statues_seen == 1) {
+      TapeTrack(20, 720, 720, 0.2);
+    }
   }
   
   if(current_state == STATE_IR_1KHZ){
@@ -57,6 +65,10 @@ void loop() {
   if(current_state == STATE_ON_BRIDGE){
     // tape track at lower speed
     // for some time
+    while(millis() - bridgeStartTime < 1500) {
+      TapeTrack(30, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, 0.2);
+    }
+    drive(30, 30);
   }
 
   if (current_state == STATE_DROP_OFF){
@@ -87,12 +99,14 @@ else{
             delay(1000);
             find_Tape();
             drive(-50, 0);
-            delay(50);
+            delay(250);
             drive(60, 60);
             delay(2700);
             drive(0, 0);
-            delay(300);
+            delay(400);
             find_Tape_Sweep();
+            // drive(50, 50);
+            // delay(50);
           }
           else{
             timeSinceBomb = millis();
@@ -102,6 +116,8 @@ else{
             drive(50, 50);
             delay(2000);
             find_Tape_Sweep();
+            drive(50, 50);
+            delay(30);
           }
           statues_seen += 1;
           break;
@@ -131,6 +147,10 @@ else{
       case 4: // FOURTH STATUE PICKUP
           launchPickUpStatueFour(RIGHT, DEFAULT_SPEED);
           releaseBridge(); // navigation included
+          drive(25, 25);
+          delay(800);
+          find_Tape_Sweep();
+          bridgeStartTime = millis();
           current_state = STATE_ON_BRIDGE;
           statues_seen += 1;
           break;
@@ -149,16 +169,16 @@ else{
           break;
       case 3: // THIRD STATUE PICKUP
           launchPickUpStatueThree(LEFT);
-          drive(60,10);
-          delay(1100);
+          drive(60,0);
+          delay(1000);
           drive(60, 60);
-          delay(700);
+          delay(50);
           locateBeacon(TEN_KHZ, LEFT);
           current_state = STATE_IR_10KHZ;
           statues_seen += 1;
           break;
       case 5: // FIFTH STATUE PICKUP
-          launchPickUpStatueFive(LEFT, DEFAULT_SPEED);
+          launchPickUpStatueFive(LEFT, 40);
           current_state = STATE_DROP_OFF;
           statues_seen += 1;
           break;

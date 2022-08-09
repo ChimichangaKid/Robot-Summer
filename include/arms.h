@@ -31,7 +31,7 @@
 #endif
 
 #ifndef OPEN_TIME
-#define OPEN_TIME 50
+#define OPEN_TIME 40
 #endif
 
 #ifndef CLOSE_TIME
@@ -43,7 +43,7 @@ void setUpArm();
 void wackArm(int side, int times) ;
 bool launchPickUpStatueOne(int side, short);
 void launchPickUpStatueTwo(int side, short);
-void launchPickUpStatueThree(int, short);
+void launchPickUpStatueThree(int);
 void launchPickUpStatueFour(int, short);
 void launchPickUpStatueFive(int, short);
 PinName moveArm(int side, int direction, bool timedStop);

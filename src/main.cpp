@@ -38,15 +38,14 @@ float timeSinceBomb;
 bool course_finished = false;
 
 void loop() {
-  
   if(current_state == STATE_TAPE_TRACK){
     TapeTrack();
   }
   
   if(current_state == STATE_IR_1KHZ){
-    error = getDifferenceInIRReadings(ONE_KHZ);
-    ir_pid = infraredPIDControl(error);
-    infraredDrive(error, ir_pid);
+    // error = getDifferenceInIRReadings(ONE_KHZ);
+    // ir_pid = infraredPIDControl(error);
+    // infraredDrive(error, ir_pid);
   }
 
   if(current_state == STATE_IR_10KHZ){    
@@ -88,10 +87,11 @@ else{
             delay(1000);
             find_Tape();
             drive(-50, 0);
-            delay(240);
-            drive(50, 50);
+            delay(50);
+            drive(60, 60);
             delay(2700);
-            drive(0, -60);
+            drive(0, 0);
+            delay(300);
             find_Tape_Sweep();
           }
           else{
@@ -113,9 +113,16 @@ else{
           drive(30, 30);
           while(!searchForIdolLeft());
           drive(40,50);
-          delay(500);
-          drive(0,0);
+          delay(600);
           locateBeacon(ONE_KHZ, LEFT);
+          drive(0,80);
+          delay(880);
+          drive(0, 0);
+          delay(150);
+          drive(80, 20);
+          delay(1330);
+          drive(-40, -40);
+
           current_state = STATE_IR_1KHZ;
           statues_seen += 1;
           statues_seen += 1;
@@ -141,9 +148,11 @@ else{
           statues_seen += 1;
           break;
       case 3: // THIRD STATUE PICKUP
-          launchPickUpStatueThree(LEFT, 50);
-          drive(70,30);
-          delay(1200);
+          launchPickUpStatueThree(LEFT);
+          drive(60,10);
+          delay(1100);
+          drive(60, 60);
+          delay(700);
           locateBeacon(TEN_KHZ, LEFT);
           current_state = STATE_IR_10KHZ;
           statues_seen += 1;

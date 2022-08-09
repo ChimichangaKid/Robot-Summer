@@ -3,6 +3,7 @@
 #include "./../include/pins.h"
 #include "./../include/bomb.h"
 
+
 bool launchBombDetectRight(){
     // ONLY WORKS WITH RIGHT SERVO
     pinMode(BOMB_DETECT_SENSOR_RIGHT, INPUT);

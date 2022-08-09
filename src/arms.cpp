@@ -127,7 +127,7 @@ bool launchPickUpStatueOne(int side, short speed){
         moveArm(side, OPEN, true);
         delay(1000);
         drive(speed + 55, speed);
-        delay(900);
+        delay(850);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -144,9 +144,9 @@ void launchPickUpStatueTwo(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(-50, 0);
-    delay(750);
+    delay(570);
     drive(0, -50);
-    delay(1300);
+    delay(1120);
     drive(40,60);
     delay(700);
     drive(0,0);
@@ -156,10 +156,10 @@ void launchPickUpStatueTwo(int side, short speed){
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(39,39);
-        delay(250);
-        drive(0, 60);
-        delay(450);
+        // drive(39,39);
+        // delay(250);
+        drive(0, 30);
+        delay(750);
         drive(0,0);
         delay(1000);
         relayArms(true);
@@ -177,24 +177,24 @@ void launchPickUpStatueTwo(int side, short speed){
     }
 }
 
-void launchPickUpStatueThree(int side, short speed){
+void launchPickUpStatueThree(int side){
     drive(-25,-25);
-    delay(200);
+    delay(300);
+    // drive(0,60);
+    // delay(230);
+    // drive(75,30);
+    // delay(2400);
+    // drive(-50, -50);
+    // delay(2800);
     drive(0,0);
-    drive(65,30);
-    delay(2000);
-    drive(-50, -50);
-    delay(2300);
-    drive(20, 20);
-    drive(0, 0);
     if (!launchBombDetectLeft()){   
         delay(1000);
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(speed-10, speed);
-        delay(620);
+        drive(40, 50);
+        delay(580);
         drive(0,0);
         delay(1000);
         relayArms(true);

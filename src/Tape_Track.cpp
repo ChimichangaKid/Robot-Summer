@@ -78,16 +78,23 @@ void find_Tape_Bomb() {
 void find_Tape_Sweep() {
   bool found_Tape = false;
   int start = millis();
-  while(millis() - start < 500 && !found_Tape) {
+  int iteration = 0;
+  while(!found_Tape){
+      iteration++;
+      start = millis();
+  while(millis() - start < 200 * iteration && !found_Tape) {
     drive(0 ,-30);
-    if(analogRead(TAPE_INPUT_PIN_LEFT) > LEFT_TAPE_THRESHOLD) {
+    if(analogRead(TAPE_INPUT_PIN_RIGHT) > RIGHT_TAPE_THRESHOLD) {
       found_Tape = true;
     }
   }
-  while(millis() - start < 1500 && !found_Tape) {
+    iteration++;
+    start = millis();
+  while(millis() - start < 200 * iteration && !found_Tape) {
     drive(-30 ,0);
     if(analogRead(TAPE_INPUT_PIN_LEFT) > LEFT_TAPE_THRESHOLD) {
       found_Tape = true;
     }
+  }
   }
 }

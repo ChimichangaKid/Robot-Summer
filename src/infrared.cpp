@@ -8,7 +8,7 @@
 #include "./../include/drive.h"
 #include <Arduino.h>
 
-#define IR_DRIVE_SPEED 35
+#define IR_DRIVE_SPEED 30
 
 #define LEFT 1
 #define RIGHT 0

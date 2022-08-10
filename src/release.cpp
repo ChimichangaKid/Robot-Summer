@@ -25,7 +25,7 @@ void releaseBridge(){
     drive(30, 30); // drive forward to get to the edge
     delay(500);
     drive(-40, -40);
-    delay(500);
+    delay(400);
     drive(0, 0);
     delay(300);
     // release bridge

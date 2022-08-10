@@ -227,6 +227,10 @@ void launchPickUpStatueFour(int side, short speed){
 }
 
 void launchPickUpStatueFive(int side, short speed){
+    drive(-25,-25);
+    delay(200);
+    drive(20, 60);
+    delay(800);
     drive(0,0);
     if (!launchBombDetectLeft()){   
         delay(1000);
@@ -234,8 +238,8 @@ void launchPickUpStatueFive(int side, short speed){
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(speed, speed);
-        delay(650);
+        drive(40, 30);
+        delay(800);
         drive(0,0);
         delay(1000);
         relayArms(true);

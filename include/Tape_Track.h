@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#define LEFT_TAPE_THRESHOLD 720
-#define RIGHT_TAPE_THRESHOLD 720
+#define LEFT_TAPE_THRESHOLD 723
+#define RIGHT_TAPE_THRESHOLD 723
 
 #define Kp 0.4
 
@@ -9,7 +9,7 @@
 #define TURN_RIGHT 1
 #define TURN_LEFT 2
 
-void TapeTrack(int speed, int threshL, int threshR, float KP);
+void TapeTrack(int speed, int threshL, int threshR, float KP, int offset);
 void setup_TapeTrack();
 void find_Tape();
 void find_Tape_Bomb();

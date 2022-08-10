@@ -14,12 +14,14 @@ void releaseSetup() {
 
 void releaseBridge(){
     // navigation
-    drive(23, 20); // go forward slowly until detects the 10 kHz beacon
+    drive(-20, 0);
+    delay(100);
+    drive(25, 20); // go forward slowly until detects the 10 kHz beacon
     while (!searchForIdolLeft()); // detects the 10kHz beacon
     drive(0, 0);
     delay(100);
     drive(20, -70); // steer to face the edge
-    delay(900);
+    delay(800);
     drive(30, 30); // drive forward to get to the edge
     delay(500);
     drive(-40, -40);

@@ -18,7 +18,7 @@ void setup_TapeTrack(){
 }
 
 //Add into Loop
-void TapeTrack(int speed, int threshL, int threshR, float KP) {
+void TapeTrack(int speed, int threshL, int threshR, float KP, int offset) {
   // Update the reading of the tape tracker
   left_reading = analogRead(TAPE_INPUT_PIN_LEFT);
   right_reading = analogRead(TAPE_INPUT_PIN_RIGHT);
@@ -52,11 +52,11 @@ void TapeTrack(int speed, int threshL, int threshR, float KP) {
     }
     if(prev_state == TURN_RIGHT) {
       //Turn right
-      drive(speed + 25, 0);
+      drive(speed + offset, 0);
     }
     if(prev_state == TURN_LEFT) {
       //Turn left
-      drive(0, speed + 25);
+      drive(0, speed + offset);
     }
   }
 }

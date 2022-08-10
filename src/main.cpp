@@ -43,10 +43,10 @@ int bridgeStartTime = 0;
 void loop() {
   if(current_state == STATE_TAPE_TRACK){
     if(statues_seen == 0) {
-      TapeTrack(50, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, Kp);
+      TapeTrack(50, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, Kp, 25);
     }
     if(statues_seen == 1) {
-      TapeTrack(20, 720, 720, 0.2);
+      TapeTrack(25, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, 0.2, 0);
     }
   }
   
@@ -66,7 +66,7 @@ void loop() {
     // tape track at lower speed
     // for some time
     while(millis() - bridgeStartTime < 1500) {
-      TapeTrack(30, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, 0.2);
+      TapeTrack(30, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, 0.2, 0);
     }
     drive(30, 30);
   }
@@ -101,7 +101,7 @@ else{
             drive(-50, 0);
             delay(250);
             drive(60, 60);
-            delay(2700);
+            delay(2200);
             drive(0, 0);
             delay(400);
             find_Tape_Sweep();
@@ -147,6 +147,7 @@ else{
       case 4: // FOURTH STATUE PICKUP
           launchPickUpStatueFour(RIGHT, DEFAULT_SPEED);
           releaseBridge(); // navigation included
+          delay(1000);
           drive(25, 25);
           delay(800);
           find_Tape_Sweep();

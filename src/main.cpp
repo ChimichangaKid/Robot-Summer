@@ -136,7 +136,7 @@ else{
           delay(600);
           locateBeacon(ONE_KHZ, LEFT);
           drive(0,80);
-          delay(930);
+          delay(880);
           drive(0, 0);
           delay(150);
           drive(80, 20);

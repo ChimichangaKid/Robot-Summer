@@ -63,14 +63,14 @@ void TapeTrack(int speed, int threshL, int threshR, float KP, int offset) {
 
 void find_Tape() {
   while(left_reading = analogRead(TAPE_INPUT_PIN_LEFT) < LEFT_TAPE_THRESHOLD) {
-    drive(-50, 0);
+    drive(-25, 0);
   }
   drive(0, 0);
 }
 
 void find_Tape_Bomb() {
   while(left_reading = analogRead(TAPE_INPUT_PIN_LEFT) < LEFT_TAPE_THRESHOLD) {
-    drive(0, 50);
+    drive(0, 25);
   }
   drive(0, 0);
 }

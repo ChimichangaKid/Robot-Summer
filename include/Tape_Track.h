@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#define LEFT_TAPE_THRESHOLD 723
-#define RIGHT_TAPE_THRESHOLD 723
+#define LEFT_TAPE_THRESHOLD 715
+#define RIGHT_TAPE_THRESHOLD 715
 
 #define Kp 0.4
 

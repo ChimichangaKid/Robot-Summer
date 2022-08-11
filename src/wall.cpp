@@ -27,8 +27,8 @@ void launchWall(){
     /* wack arms*/
     relayWall();
     driveWall(WALL_BACKWARD);
-    delay(1000);
-    useArmsToWack(2);
+    //delay(1000);
+    //useArmsToWack(2);
     /* relay motor to wall */
     delay(1000);
     relayWall();
@@ -55,7 +55,7 @@ void driveWall(int direction){
 
     
     if (direction == WALL_FORWARD){
-        int totalTime = 5000;
+        int totalTime = 5100;
         int intermediateStopTime = 2500;
         delay(intermediateStopTime);
         pwm_start(HIGH_PIN, 100, 0, RESOLUTION_12B_COMPARE_FORMAT);
@@ -64,7 +64,7 @@ void driveWall(int direction){
 
         delay(1000);
         relayWall();
-        delay(1000);
+        // delay(1000);
         // pwm_start(LOW_PIN, 100, 0, RESOLUTION_12B_COMPARE_FORMAT);
         pwm_start(HIGH_PIN, 100, (int)(4096 * WALL_MOTOR_DUTY_CYCLE / 100.0), RESOLUTION_12B_COMPARE_FORMAT);
         delay(totalTime-intermediateStopTime);

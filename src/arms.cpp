@@ -6,6 +6,9 @@
 
 // #include <Arduino.h>
 
+bool bombDetected = false;
+bool currentBombDetected = false;
+
 void relayArms(bool mode){
     if (mode){
         digitalWrite(RELAY_CH1, HIGH);
@@ -123,24 +126,29 @@ bool launchPickUpStatueOne(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(0,0);
-    if (!launchBombDetectRight()){   
-        delay(1000);
+    if(!bombDetected) currentBombDetected = launchBombDetectRight();
+    delay(1000);
+    
+    if(!currentBombDetected) {
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
+    }
         drive(speed + 55, speed);
         delay(850);
         drive(0,0);
         delay(1000);
+    
+    if(!currentBombDetected) {
         relayArms(true);
         delay(1000);
         takeInProcedure(side);
-        return false;
     }
-    else{
-        return true;
-    }
+
+    if(currentBombDetected) bombDetected = true;
+    currentBombDetected = false;
+    return bombDetected;
 }
 
 void launchPickUpStatueTwo(int side, short speed){
@@ -150,25 +158,29 @@ void launchPickUpStatueTwo(int side, short speed){
     delay(570);
     drive(0, -50);
     delay(1050);
-    drive(40,63);
-    delay(910);
+    drive(42,63);
+    delay(870);
     drive(0,0);
-    if (!launchBombDetectRight()){   
-        delay(1000);
+    if (!bombDetected) currentBombDetected = launchBombDetectRight(); 
+    delay(1000);
+    if (!currentBombDetected) {
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        // drive(39,39);
-        // delay(250);
-        drive(17, 38);
-        delay(710);
-        drive(0,0);
-        delay(1000);
+    }
+    drive(13, 40);
+    delay(530);
+    drive(0,0);
+    delay(1000);
+    if (!currentBombDetected) {
         relayArms(true);
         delay(1000);
         takeInProcedure(side);
     }
+    if(currentBombDetected) bombDetected = currentBombDetected;
+    currentBombDetected = false;
+    /*
     else{
         delay(1000);
         drive(40,40);
@@ -178,73 +190,87 @@ void launchPickUpStatueTwo(int side, short speed){
         drive(0,0);
         delay(1000);
     }
+    */
 }
 
 void launchPickUpStatueThree(int side){
     drive(-25,-25);
     delay(300);
-    // drive(0,60);
-    // delay(230);
-    // drive(75,30);
-    // delay(2400);
-    // drive(-50, -50);
-    // delay(2800);
     drive(0,0);
-    if (!launchBombDetectLeft() || true){   
-        delay(1000);
+    if (!bombDetected) currentBombDetected = launchBombDetectLeft();   
+    delay(1000);
+    if(!currentBombDetected){
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(50, 15);
-        delay(450);
-        drive(0,0);
-        delay(1000);
+    }
+    drive(50, 35);
+    delay(460);
+    drive(0,0);
+    delay(1000);
+    if(!currentBombDetected){
         relayArms(true);
         delay(1000);
         takeInProcedure(side);
     }
+    if(currentBombDetected) bombDetected = currentBombDetected;
+    currentBombDetected = false;
 }
 
 void launchPickUpStatueFour(int side, short speed){
     drive(-25,-25);
-    delay(400);
+    delay(550);
+    drive(30, 10);
+    delay(500);
     drive(0,0);
-    if (!launchBombDetectRight()){   
-        delay(1000);
-        relayArms(true);
-        delay(1000);
-        moveArm(side, OPEN, true);
-        delay(1000);
-        drive(57, 50);
-        delay(620);
-        drive(0,0);
-        delay(1000);
+    if(!bombDetected) currentBombDetected = launchBombDetectRight();  
+    delay(1000);
+    if(!currentBombDetected){
+    relayArms(true);
+    delay(1000);
+    moveArm(side, OPEN, true);
+    delay(1000);
+    }
+    drive(57, 50);
+    delay(600);
+    drive(0,0);
+    delay(1000);
+    if(!currentBombDetected){
         relayArms(true);
         delay(1000);
         takeInProcedure(side);
     }
+    drive(-30, 10);
+    delay(500);
+    if(currentBombDetected) bombDetected = currentBombDetected;
+    currentBombDetected = false;
 }
 
 void launchPickUpStatueFive(int side, short speed){
     drive(-25,-25);
     delay(200);
-    drive(20, 60);
-    delay(800);
+    drive(20, 35);
+    delay(400);
     drive(0,0);
-    if (!launchBombDetectLeft()){   
-        delay(1000);
+    if (!bombDetected) currentBombDetected = launchBombDetectLeft();   
+    delay(1000);
+    if(!currentBombDetected){
         relayArms(true);
         delay(1000);
         moveArm(side, OPEN, true);
         delay(1000);
-        drive(40, 30);
-        delay(800);
-        drive(0,0);
-        delay(1000);
+    }
+    drive(40, 30);
+    delay(800);
+    drive(0,0);
+    delay(1000);
+    if(!currentBombDetected){
         relayArms(true);
         delay(1000);
         takeInProcedure(side);
     }
+    if(currentBombDetected) bombDetected = currentBombDetected;
+    currentBombDetected = false;
 }
 

@@ -66,18 +66,19 @@ void loop() {
     // tape track at lower speed
     // for some time
     while(millis() - bridgeStartTime < 1500) {
-      TapeTrack(30, LEFT_TAPE_THRESHOLD, RIGHT_TAPE_THRESHOLD, 0.2, 0);
+      TapeTrack(30, LEFT_TAPE_THRESHOLD + 16, RIGHT_TAPE_THRESHOLD + 16, 0.2, 0);
     }
     drive(30, 30);
   }
 
   if (current_state == STATE_DROP_OFF){
-    drive(30,30);
-    while(!searchForIdolRight()); // drive forward until right sensor detects the pole
-    drive(0,0);
-    delay(200); 
-    drive(20,20); // drive further forward to peak beyond the edge
+    // drive(30,30);
+    // while(!searchForIdolRight()); // drive forward until right sensor detects the pole
+    drive(-30, 0);
+    delay(200);
+    drive(30, 30);
     delay(500);
+    drive(0, 0);
     releaseTrapDoor();
     delay(500);
     launchWall();
@@ -85,7 +86,7 @@ void loop() {
     delay(120000);
   }
 if(bombdetected){
-  if(millis() - timeSinceBomb == 3000){
+  if(millis() - timeSinceBomb >= 3000){
     bombdetected = false;
   }
 }
@@ -99,25 +100,25 @@ else{
             delay(1000);
             find_Tape();
             drive(-50, 0);
-            delay(250);
+            delay(260);
             drive(60, 60);
             delay(2200);
             drive(0, 0);
             delay(400);
-            find_Tape_Sweep();
-            // drive(50, 50);
-            // delay(50);
+            find_Tape();
           }
           else{
             timeSinceBomb = millis();
-            find_Tape_Bomb();
-            drive(0, 50);
-            delay(270);
-            drive(50, 50);
-            delay(2000);
-            find_Tape_Sweep();
-            drive(50, 50);
-            delay(30);
+            drive(-70, -10);
+            delay(1000);
+            find_Tape();
+            drive(-50, 0);
+            delay(260);
+            drive(60, 60);
+            delay(2200);
+            drive(0, 0);
+            delay(400);
+            find_Tape();
           }
           statues_seen += 1;
           break;
@@ -132,12 +133,12 @@ else{
           delay(600);
           locateBeacon(ONE_KHZ, LEFT);
           drive(0,80);
-          delay(880);
+          delay(600);
           drive(0, 0);
           delay(150);
           drive(80, 20);
-          delay(1330);
-          drive(-40, -40);
+          delay(1310);
+          drive(-20, -20);
 
           current_state = STATE_IR_1KHZ;
           statues_seen += 1;
@@ -146,6 +147,7 @@ else{
       
       case 4: // FOURTH STATUE PICKUP
           launchPickUpStatueFour(RIGHT, DEFAULT_SPEED);
+          locateBeaconBackwards(TEN_KHZ);
           releaseBridge(); // navigation included
           delay(1000);
           drive(25, 25);

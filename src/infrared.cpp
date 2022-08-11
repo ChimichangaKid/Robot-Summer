@@ -140,22 +140,48 @@ void infraredDrive(float error, float PID){
 void locateBeacon(short frequency_kHz, short direction){
     if(direction == LEFT){
         do{
-            drive(0, 30);
+            if(frequency_kHz == TEN_KHZ) {
+                drive(0, 30);
+            }
+            else {
+                drive(0, 25);
+            }
         } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
     }
     else {
         do{
-            drive(30, 0);
+            if(frequency_kHz == TEN_KHZ) {
+                drive(30, 0);
+            }
+            else {
+                drive(25, 0);
+            }
         } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
     }
     if(direction == LEFT){
         do{
-            drive(0, 30);
+            if(frequency_kHz == TEN_KHZ) {
+                drive(0, 30);
+            }
+            else {
+                drive(0, 25);
+            }
         } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
     }
     else {
         do{
-            drive(30, 0);
+            if(frequency_kHz == TEN_KHZ) {
+                drive(30, 0);
+            }
+            else {
+                drive(25, 0);
+            }
         } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
     }
 }
+
+void locateBeaconBackwards(short frequency_kHz){
+        do{
+            drive(-25, 0);
+        } while(abs(getDifferenceInIRReadings(frequency_kHz)) < DESIRED_IR_READING);
+    }

@@ -59,4 +59,6 @@ void infraredDrive(float error, float PID);
  */
 void locateBeacon(short frequency_kHz, short direction);
 
+void locateBeaconBackwards(short frequency_kHz);
+
 #endif

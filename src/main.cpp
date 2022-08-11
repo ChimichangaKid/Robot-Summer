@@ -20,7 +20,6 @@
 #define STATE_DROP_OFF 5
 
 #define DEFAULT_SPEED 25
-#define Leftplat 1
 
 void setup() {
     drive_setup();
@@ -134,11 +133,11 @@ else{
           delay(600);
           locateBeacon(ONE_KHZ, LEFT);
           drive(0,80);
-          delay(600);
+          delay(930);
           drive(0, 0);
           delay(150);
           drive(80, 20);
-          delay(1310);
+          delay(1380);
           drive(-20, -20);
 
           current_state = STATE_IR_1KHZ;
@@ -174,7 +173,7 @@ else{
       case 3: // THIRD STATUE PICKUP
           launchPickUpStatueThree(LEFT);
           drive(60,0);
-          delay(1000);
+          delay(800);
           drive(60, 60);
           delay(50);
           locateBeacon(TEN_KHZ, LEFT);

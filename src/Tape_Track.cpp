@@ -98,3 +98,35 @@ void find_Tape_Sweep() {
   }
   }
 }
+
+void find_Tape_Bridge() {
+  bool found_Tape = false;
+  int start = millis();
+  int iteration = 0;
+  while(!found_Tape){
+      iteration++;
+      start = millis();
+  while(millis() - start < 200 * iteration && !found_Tape) {
+    drive(0 ,-30);
+    if(analogRead(TAPE_INPUT_PIN_RIGHT) > RIGHT_TAPE_THRESHOLD + BRIDGE_THRESHOLD_OFFSET) {
+      found_Tape = true;
+    }
+  }
+    iteration++;
+    start = millis();
+  while(millis() - start < 200 * iteration && !found_Tape) {
+    drive(-30 ,0);
+    if(analogRead(TAPE_INPUT_PIN_LEFT) > LEFT_TAPE_THRESHOLD + BRIDGE_THRESHOLD_OFFSET) {
+      found_Tape = true;
+    }
+  }
+  }
+}
+
+int leftReading() {
+  return analogRead(TAPE_INPUT_PIN_LEFT);
+}
+
+int rightReading() {
+  return analogRead(TAPE_INPUT_PIN_RIGHT);
+}

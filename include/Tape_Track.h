@@ -2,6 +2,7 @@
 
 #define LEFT_TAPE_THRESHOLD 715
 #define RIGHT_TAPE_THRESHOLD 715
+#define BRIDGE_THRESHOLD_OFFSET 55
 
 #define Kp 0.4
 
@@ -14,3 +15,6 @@ void setup_TapeTrack();
 void find_Tape();
 void find_Tape_Bomb();
 void find_Tape_Sweep();
+void find_Tape_Bridge();
+int leftReading();
+int rightReading();

@@ -65,8 +65,8 @@ void loop() {
   if(current_state == STATE_ON_BRIDGE){
     // tape track at lower speed
     // for some time
-    while(millis() - bridgeStartTime < 1500) {
-      TapeTrack(30, LEFT_TAPE_THRESHOLD + 20, RIGHT_TAPE_THRESHOLD + 20, 0.3, 10);
+    while(millis() - bridgeStartTime < -1) {
+      TapeTrack(30, LEFT_TAPE_THRESHOLD + BRIDGE_THRESHOLD_OFFSET, RIGHT_TAPE_THRESHOLD + BRIDGE_THRESHOLD_OFFSET, 0.3, 0);
     }
     drive(30, 30);
   }
@@ -74,10 +74,13 @@ void loop() {
   if (current_state == STATE_DROP_OFF){
     // drive(30,30);
     // while(!searchForIdolRight()); // drive forward until right sensor detects the pole
+    wackArm(RIGHT,1);
+    moveArm(RIGHT,OPEN,true);
+
     drive(-30, 0);
-    delay(200);
+    delay(400);
     drive(30, 30);
-    delay(500);
+    delay(800);
     drive(0, 0);
     releaseTrapDoor();
     delay(500);
@@ -152,7 +155,7 @@ else{
           delay(1000);
           drive(25, 25);
           delay(800);
-          find_Tape_Sweep();
+          find_Tape_Bridge();
           bridgeStartTime = millis();
           current_state = STATE_ON_BRIDGE;
           statues_seen += 1;

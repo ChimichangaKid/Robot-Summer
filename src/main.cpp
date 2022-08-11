@@ -20,6 +20,7 @@
 #define STATE_DROP_OFF 5
 
 #define DEFAULT_SPEED 25
+#define Leftplat 1
 
 void setup() {
     drive_setup();

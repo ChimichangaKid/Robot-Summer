@@ -170,7 +170,7 @@ void launchPickUpStatueTwo(int side, short speed){
         delay(1000);
     }
     drive(13, 40);
-    delay(540);
+    delay(520);
     drive(0,0);
     delay(1000);
     if (!currentBombDetected) {
@@ -206,7 +206,7 @@ void launchPickUpStatueThree(int side){
         delay(1000);
     }
     drive(50, 35);
-    delay(460);
+    delay(450);
     drive(0,0);
     delay(1000);
     if(!currentBombDetected){
@@ -251,7 +251,7 @@ void launchPickUpStatueFive(int side, short speed){
     drive(-25,-25);
     delay(200);
     drive(20, 35);
-    delay(400);
+    delay(200);
     drive(0,0);
     if (!bombDetected) currentBombDetected = launchBombDetectLeft();   
     delay(1000);
@@ -262,7 +262,7 @@ void launchPickUpStatueFive(int side, short speed){
         delay(1000);
     }
     drive(40, 30);
-    delay(800);
+    delay(400);
     drive(0,0);
     delay(1000);
     if(!currentBombDetected){

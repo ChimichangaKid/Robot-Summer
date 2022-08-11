@@ -21,7 +21,7 @@ void releaseBridge(){
     drive(0, 0);
     delay(100);
     drive(20, -70); // steer to face the edge
-    delay(750);
+    delay(800);
     drive(30, 30); // drive forward to get to the edge
     delay(300);
     drive(-40, -40);
@@ -31,8 +31,10 @@ void releaseBridge(){
     // release bridge
     Servo bridgeServo;
     bridgeServo.attach(RELEASE_SERVO);
-    bridgeServo.write(163);
-    delay(500);
+    for(int i = 168; i >= 158; i--) {
+        bridgeServo.write(i);
+        delay(20);
+    }
     bridgeServo.detach();
 }
 

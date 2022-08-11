@@ -74,11 +74,15 @@ void loop() {
   if (current_state == STATE_DROP_OFF){
     // drive(30,30);
     // while(!searchForIdolRight()); // drive forward until right sensor detects the pole
+
+    wackArm(RIGHT,1);
+    moveArm(RIGHT,OPEN,true);
     drive(-30, 0);
-    delay(200);
+    delay(400);
     drive(30, 30);
-    delay(500);
+    delay(800);
     drive(0, 0);
+    moveArm(LEFT,OPEN,true);
     releaseTrapDoor();
     delay(500);
     launchWall();
@@ -134,10 +138,25 @@ else{
           locateBeacon(ONE_KHZ, LEFT);
           drive(0,80);
           delay(600);
+          //delay(500);
           drive(0, 0);
           delay(150);
           drive(80, 20);
           delay(1310);
+          //delay(1210);
+          
+          /*
+          while(distanceLeft > 2) {
+            drive(-80, -20);
+            delay(45);
+            drive(0, 80);
+            delay(45);
+            drive(80, 20);
+            delay(45);
+            triggerSonar();
+          }
+          */
+
           drive(-20, -20);
 
           current_state = STATE_IR_1KHZ;

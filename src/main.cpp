@@ -171,7 +171,7 @@ else{
           delay(1000);
           drive(25, 25);
           delay(800);
-          find_Tape_Sweep();
+          find_Tape_Bridge();
           bridgeStartTime = millis();
           current_state = STATE_ON_BRIDGE;
           statues_seen += 1;

@@ -14,3 +14,4 @@ void setup_TapeTrack();
 void find_Tape();
 void find_Tape_Bomb();
 void find_Tape_Sweep();
+void find_Tape_Bridge();

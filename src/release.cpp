@@ -33,7 +33,7 @@ void releaseBridge(){
     bridgeServo.attach(RELEASE_SERVO);
     for(int i = 168; i >= 158; i--) {
         bridgeServo.write(i);
-        delay(20);
+        delay(40);
     }
     bridgeServo.detach();
 }

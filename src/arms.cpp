@@ -170,7 +170,7 @@ void launchPickUpStatueTwo(int side, short speed){
         delay(1000);
     }
     drive(13, 40);
-    delay(530);
+    delay(540);
     drive(0,0);
     delay(1000);
     if (!currentBombDetected) {

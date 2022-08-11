@@ -66,7 +66,7 @@ void loop() {
     // tape track at lower speed
     // for some time
     while(millis() - bridgeStartTime < 1500) {
-      TapeTrack(30, LEFT_TAPE_THRESHOLD + 16, RIGHT_TAPE_THRESHOLD + 16, 0.2, 0);
+      TapeTrack(30, LEFT_TAPE_THRESHOLD + 20, RIGHT_TAPE_THRESHOLD + 20, 0.3, 10);
     }
     drive(30, 30);
   }
